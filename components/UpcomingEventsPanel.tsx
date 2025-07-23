@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { FaCalendarAlt } from "react-icons/fa";
 
 // ✅ Dummy event data (you can replace later with Sanity or API)
@@ -69,7 +70,9 @@ export default function UpcomingEventsPanel() {
               key={event.id}
               className="bg-white shadow-md rounded-lg overflow-hidden border"
             >
-              <img
+              <Image
+                height={40}
+                width={40}
                 src={event.image}
                 alt={event.title}
                 className="w-full h-40 object-cover"

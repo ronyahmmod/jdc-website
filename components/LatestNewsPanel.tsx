@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
+import Image from "next/image";
 
 // ✅ Fake data for now
 const news = [
@@ -87,9 +88,11 @@ export default function LatestNewsPanel() {
               key={item.id}
               className="bg-white shadow-md rounded-lg overflow-hidden border"
             >
-              <img
+              <Image
                 src={item.image}
                 alt={item.title}
+                width={40}
+                height={40}
                 className="w-full h-40 object-cover"
               />
               <div className="p-4">
