@@ -6,13 +6,11 @@ import { format } from "date-fns";
 import Head from "next/head";
 import { Attachment } from "@/app/types/Notice";
 
-type PageProps = {
-  params: {
-    slug: string;
-  };
-};
-
-export default async function NoticeDetails({ params }: PageProps) {
+export default async function NoticeDetails({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const { slug } = params;
 
   const query = groq`
