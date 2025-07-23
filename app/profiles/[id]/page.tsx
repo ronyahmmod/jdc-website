@@ -5,7 +5,7 @@ import { PortableText } from "@portabletext/react";
 
 export async function generateStaticParams() {
   const teachers = await client.fetch(groq`*[_type == "teacher"]{ _id }`);
-  return teachers.map(({ _id }) => ({ id: _id }));
+  return teachers.map(({ _id }: { _id: string }) => ({ id: _id }));
 }
 
 export default async function TeacherProfile({
