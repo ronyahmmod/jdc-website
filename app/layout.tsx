@@ -25,7 +25,7 @@ export default async function RootLayout({
 }) {
   const notices = await client.fetch(importantQuery);
 
-  const headlines = notices.map((item: any) => ({
+  const headlines = notices.map((item: unknown) => ({
     text: item.title,
     link: `/notice/${item.slug.current}`,
     newTab: false,

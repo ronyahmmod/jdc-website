@@ -5,11 +5,8 @@ import { groq } from "next-sanity";
 import { format } from "date-fns";
 import Head from "next/head";
 
-type Props = {
-  combined: string;
-};
-
-export default async function NoticeDetails({ combined }: Props) {
+export default async function NoticeDetails({ params }) {
+  const { combined } = params;
   const id = combined.split("--")[0]; // Extract _id from "id--slug"
 
   const query = groq`
@@ -58,7 +55,7 @@ export default async function NoticeDetails({ combined }: Props) {
           <div className="mt-6">
             <h2 className="text-lg font-semibold mb-2">📎 সংযুক্তি</h2>
             <ul className="space-y-2">
-              {notice.attachments.map((file: any) => (
+              {notice.attachments.map((file) => (
                 <li
                   key={file.asset._id}
                   className="flex items-center space-x-2"

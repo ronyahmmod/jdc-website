@@ -19,7 +19,7 @@ const query = groq`
 `;
 
 export default function PrincipalPanel() {
-  const [principals, setPrincipals] = useState<any[]>([]);
+  const [principals, setPrincipals] = useState<unknown[]>([]);
   const router = useRouter();
 
   useEffect(() => {

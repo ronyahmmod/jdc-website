@@ -11,7 +11,7 @@ const query = groq`*[_type == "heroImage" && showInSlider == true] | order(_crea
 }`;
 
 export default function HeroSlider() {
-  const [slides, setSlides] = useState<any[]>([]);
+  const [slides, setSlides] = useState<unknown[]>([]);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {

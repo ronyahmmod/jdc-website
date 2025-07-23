@@ -19,7 +19,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [collegeInfo, setCollegeInfo] = useState<{
     name: string;
-    logo?: any;
+    logo?: unknown;
   } | null>(null);
 
   useEffect(() => {

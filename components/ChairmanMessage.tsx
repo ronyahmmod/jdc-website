@@ -15,7 +15,7 @@ const query = groq`*[_type == "chairmanMessage" && showOnHome == true][0] {
 }`;
 
 export default function ChairmanMessage() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<unknown>(null);
   const [showFull, setShowFull] = useState(false);
 
   useEffect(() => {
