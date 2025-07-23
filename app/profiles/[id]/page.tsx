@@ -3,31 +3,33 @@ import { groq } from "next-sanity";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
 export async function generateStaticParams() {
   const teachers = await client.fetch(groq`*[_type == "teacher"]{ _id }`);
   return teachers.map(({ _id }: { _id: string }) => ({ id: _id }));
 }
 
-export default async function TeacherProfile({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function TeacherProfile({ params }: Props) {
   const query = groq`
-  *[_type == "teacher" && _id == $id][0]{
-    name,
-    designation,
-    subject,
-    mobileNumber,
-    joiningDate,
-    photo{
-      asset->{
-        url
-      }
-    },
-    bio
-  }
-`;
+    *[_type == "teacher" && _id == $id][0]{
+      name,
+      designation,
+      subject,
+      mobileNumber,
+      joiningDate,
+      photo{
+        asset->{
+          url
+        }
+      },
+      bio
+    }
+  `;
 
   const data = await client.fetch(query, { id: params.id });
 
