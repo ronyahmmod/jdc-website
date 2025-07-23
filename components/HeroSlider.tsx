@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 import { client } from "@/lib/sanity";
 import urlFor from "@/lib/sanity";
 import { groq } from "next-sanity";
+import { Slide } from "@/app/types/Slide";
 
 const query = groq`*[_type == "heroImage" && showInSlider == true] | order(_createdAt desc)[0...5] {
   _id, title, subtitle, image, buttonText, buttonLink
 }`;
 
 export default function HeroSlider() {
-  const [slides, setSlides] = useState<unknown[]>([]);
+  const [slides, setSlides] = useState<Slide[]>([]);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {

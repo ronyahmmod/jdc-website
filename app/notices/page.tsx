@@ -5,6 +5,7 @@ import { client } from "@/lib/sanity";
 import { groq } from "next-sanity";
 import { format } from "date-fns";
 import Link from "next/link";
+import { Notice } from "../types/Notice";
 
 const categories = [
   { title: "📋 All", slug: "all" },
@@ -48,10 +49,12 @@ export default function NoticeMainPage() {
 
   const filtered = useMemo(() => {
     return notices
-      .filter((n) =>
+      .filter((n: Notice) =>
         selectedCategory === "all" ? true : n.category === selectedCategory
       )
-      .filter((n) => n.title.toLowerCase().includes(searchTerm.toLowerCase()));
+      .filter((n: Notice) =>
+        n.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
   }, [searchTerm, notices, selectedCategory]);
 
   const paginated = filtered.slice((page - 1) * perPage, page * perPage);
@@ -104,7 +107,7 @@ export default function NoticeMainPage() {
             </tr>
           </thead>
           <tbody>
-            {paginated.map((notice) => (
+            {paginated.map((notice: Notice) => (
               <tr key={notice._id} className="border-t hover:bg-gray-50">
                 <td className="px-4 py-2">{notice.title}</td>
                 <td className="px-4 py-2">
@@ -122,7 +125,7 @@ export default function NoticeMainPage() {
                             rel="noopener noreferrer"
                             className="text-indigo-600 hover:underline"
                           >
-                            ⬇ {file.originalFilename}
+                            ⬇ {file.originalFilename || ""}
                           </a>
                         </li>
                       ))}
@@ -133,7 +136,7 @@ export default function NoticeMainPage() {
                 </td>
                 <td className="px-4 py-2">
                   <Link
-                    href={`/notices/${notice._id}--${notice.slug?.current || "notice"}`}
+                    href={`/notices/${notice.slug?.current || "notice"}`}
                     className="text-indigo-600 hover:underline"
                   >
                     🔗 View

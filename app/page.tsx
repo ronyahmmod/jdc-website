@@ -1,4 +1,3 @@
-import CategoryNoticePanel from "@/components/CategoryNoticePanel";
 import ChairmanMessage from "@/components/ChairmanMessage";
 import HeroSlider from "@/components/HeroSlider";
 import LatestNewsPanel from "@/components/LatestNewsPanel";
@@ -13,7 +12,7 @@ export default function Home() {
       <HeroSlider />
       <ChairmanMessage />
       <PrincipalPanel />
-      <CategoryNoticePanel />
+
       <StatsPanel />
       <LatestNewsPanel />
       <VideoGalleryPanel />

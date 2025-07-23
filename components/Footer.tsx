@@ -55,7 +55,7 @@ export default function Footer() {
             Jibannagar College, Jibannagar, Chuadanga, Bangladesh
           </p>
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!..." // Replace with valid map link
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3661.1707305143696!2d88.82226567476832!3d23.418199001449793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fed507158b05dd%3A0x6af5085bac375594!2sJibonnagor%20Degree%20College!5e0!3m2!1sen!2sbd!4v1753256886019!5m2!1sen!2sbd" // Replace with valid map link
             width="100%"
             height="150"
             className="rounded border-none"
@@ -70,14 +70,14 @@ export default function Footer() {
           <h3 className="text-lg font-semibold mb-4">🌐 Connect With Us</h3>
           <div className="flex gap-4 mb-4">
             <a
-              href="https://facebook.com/jibannagarcollege"
+              href="https://facebook.com/jdcjc2016"
               target="_blank"
               className="hover:text-blue-500"
             >
               <FaFacebookF size={20} />
             </a>
             <a
-              href="https://youtube.com/@jibannagarcollege"
+              href="https://www.youtube.com/@jdconlineclassroom5434"
               target="_blank"
               className="hover:text-red-500"
             >
@@ -100,11 +100,11 @@ export default function Footer() {
           <p>
             Developed by{" "}
             <a
-              href="https://yourportfolio.com"
+              href="https://www.facebook.com/rony.ahmmod.9"
               target="_blank"
               className="text-blue-400 hover:underline"
             >
-              Your Name
+              Engr MD. Rony Ahmmod B.Sc(CSE)
             </a>
           </p>
         </div>

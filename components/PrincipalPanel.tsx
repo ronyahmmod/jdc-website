@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { client } from "@/lib/sanity"; // 🔁 Make sure this is your sanity client
 import { groq } from "next-sanity";
+import { Profile } from "@/app/types/Profile";
 
 const query = groq`
   *[_type == "teacher" && (designation == "Principal" || designation == "Vice Principal")]
@@ -19,7 +20,7 @@ const query = groq`
 `;
 
 export default function PrincipalPanel() {
-  const [principals, setPrincipals] = useState<unknown[]>([]);
+  const [principals, setPrincipals] = useState<Profile[]>([]);
   const router = useRouter();
 
   useEffect(() => {

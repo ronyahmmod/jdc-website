@@ -1,16 +1,22 @@
-// app/notices/[combined]/page.tsx
+// app/notices/[slug]/page.tsx
 import { client } from "@/lib/sanity";
 import { notFound } from "next/navigation";
 import { groq } from "next-sanity";
 import { format } from "date-fns";
 import Head from "next/head";
+import { Attachment } from "@/app/types/Notice";
 
-export default async function NoticeDetails({ params }) {
-  const { combined } = params;
-  const id = combined.split("--")[0]; // Extract _id from "id--slug"
+type PageProps = {
+  params: {
+    slug: string;
+  };
+};
+
+export default async function NoticeDetails({ params }: PageProps) {
+  const { slug } = params;
 
   const query = groq`
-    *[_type == "notice" && _id == $id][0]{
+    *[_type == "notice" && slug.current == $slug][0]{
       _id,
       title,
       slug,
@@ -26,7 +32,7 @@ export default async function NoticeDetails({ params }) {
     }
   `;
 
-  const notice = await client.fetch(query, { id });
+  const notice = await client.fetch(query, { slug });
 
   if (!notice) return notFound();
 
@@ -55,7 +61,7 @@ export default async function NoticeDetails({ params }) {
           <div className="mt-6">
             <h2 className="text-lg font-semibold mb-2">📎 সংযুক্তি</h2>
             <ul className="space-y-2">
-              {notice.attachments.map((file) => (
+              {notice.attachments.map((file: Attachment) => (
                 <li
                   key={file.asset._id}
                   className="flex items-center space-x-2"

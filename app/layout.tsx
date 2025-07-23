@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Marquee from "@/components/Marquee";
 import BackToTopButton from "@/components/BackToTopButton";
+import { Notice } from "./types/Notice";
 export const metadata: Metadata = {
   title: "Jibannagar College",
   description: "Official website of Jibannagar College",
@@ -25,9 +26,9 @@ export default async function RootLayout({
 }) {
   const notices = await client.fetch(importantQuery);
 
-  const headlines = notices.map((item: unknown) => ({
+  const headlines = notices.map((item: Notice) => ({
     text: item.title,
-    link: `/notice/${item.slug.current}`,
+    link: `/notices/${item.slug.current}`,
     newTab: false,
     icon: "📢",
   }));

@@ -1,4 +1,5 @@
 "use client";
+import { InstitutionInfo } from "@/app/types/InstitutionInfo";
 import urlFor, { client } from "@/lib/sanity";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,21 +7,18 @@ import { useEffect, useState } from "react";
 
 const navItems = [
   { label: "হোম", href: "/" },
-  { label: "কলেজ পরিচিতি", href: "about" },
-  { label: "রুটিন", href: "routine" },
-  { label: "শিক্ষকবৃন্দ", href: "teacher" },
-  { label: "কর্মচারীবৃন্দ", href: "stuff" },
-  { label: "বিজ্ঞপ্তি", href: "notice" },
-  { label: "সেবা", href: "service" },
-  { label: "যোগাযোগ", href: "contact" },
+  { label: "কলেজ পরিচিতি", href: "/about" },
+  { label: "রুটিন", href: "/routine" },
+  { label: "শিক্ষকবৃন্দ", href: "/teacher" },
+  { label: "কর্মচারীবৃন্দ", href: "/stuff" },
+  { label: "বিজ্ঞপ্তি", href: "/notices" },
+  { label: "সেবা", href: "/service" },
+  { label: "যোগাযোগ", href: "/contact" },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const [collegeInfo, setCollegeInfo] = useState<{
-    name: string;
-    logo?: unknown;
-  } | null>(null);
+  const [collegeInfo, setCollegeInfo] = useState<InstitutionInfo | null>(null);
 
   useEffect(() => {
     async function fetchCollegeInfo() {
