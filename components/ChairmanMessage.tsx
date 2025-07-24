@@ -5,6 +5,7 @@ import Image from "next/image";
 import { client } from "@/lib/sanity";
 import { groq } from "next-sanity";
 import { motion } from "framer-motion";
+import type { ChairmanMessage } from "@/app/types/ChairmanMessage";
 
 const query = groq`*[_type == "chairmanMessage" && showOnHome == true][0] {
   name,
@@ -15,7 +16,7 @@ const query = groq`*[_type == "chairmanMessage" && showOnHome == true][0] {
 }`;
 
 export default function ChairmanMessage() {
-  const [data, setData] = useState<unknown>(null);
+  const [data, setData] = useState<ChairmanMessage | null>(null);
   const [showFull, setShowFull] = useState(false);
 
   useEffect(() => {

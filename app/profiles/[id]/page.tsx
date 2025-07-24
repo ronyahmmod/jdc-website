@@ -4,9 +4,7 @@ import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 
 type Props = {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 };
 
 export async function generateStaticParams() {
@@ -15,6 +13,7 @@ export async function generateStaticParams() {
 }
 
 export default async function TeacherProfile({ params }: Props) {
+  const { id } = await params;
   const query = groq`
     *[_type == "teacher" && _id == $id][0]{
       name,
@@ -31,7 +30,7 @@ export default async function TeacherProfile({ params }: Props) {
     }
   `;
 
-  const data = await client.fetch(query, { id: params.id });
+  const data = await client.fetch(query, { id: id });
 
   if (!data) return <div>Not Found</div>;
 

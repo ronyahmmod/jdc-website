@@ -6,9 +6,9 @@ import { format } from "date-fns";
 import Head from "next/head";
 import { Attachment } from "@/app/types/Notice";
 
-interface PageProps {
+type PageProps = {
   params: Promise<{ slug: string }>;
-}
+};
 
 export default async function NoticeDetails({ params }: PageProps) {
   const { slug } = await params;
