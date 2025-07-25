@@ -16,6 +16,7 @@ export interface Notice {
   archived?: boolean;
   publishedAt: string;
   updatedAt?: string;
+  eventDate?: string;
 }
 
 export interface Attachment {

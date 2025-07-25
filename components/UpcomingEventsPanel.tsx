@@ -1,61 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaCalendarAlt } from "react-icons/fa";
-
-// ✅ Dummy event data (you can replace later with Sanity or API)
-const events = [
-  {
-    id: 1,
-    title: "Freshers’ Reception Ceremony",
-    date: "20 August 2025",
-    image: "/event1.jpg",
-  },
-  {
-    id: 2,
-    title: "National Mourning Day Program",
-    date: "15 August 2025",
-    image: "/event2.jpg",
-  },
-  {
-    id: 3,
-    title: "Career Counseling Workshop",
-    date: "5 August 2025",
-    image: "/event3.jpg",
-  },
-  {
-    id: 4,
-    title: "Independence Day Parade",
-    date: "26 March 2025",
-    image: "/event4.jpg",
-  },
-  {
-    id: 5,
-    title: "Annual Science Fair",
-    date: "10 September 2025",
-    image: "/event5.jpg",
-  },
-  {
-    id: 6,
-    title: "Inter-College Debate Competition",
-    date: "1 October 2025",
-    image: "/event6.jpg",
-  },
-];
+import { client } from "@/lib/sanity";
+import { Notice } from "@/app/types/Notice";
+import { groq } from "next-sanity";
 
 export default function UpcomingEventsPanel() {
+  const [events, setEvents] = useState<Notice[]>([]);
   const [page, setPage] = useState(0);
   const perPage = 3;
+  const router = useRouter();
+  console.log("Upcomming events");
 
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const query = groq`
+        *[_type == "notice" && published == true && archived==false && category=='event' && defined(eventDate) && eventDate >= now()] | order(eventDate asc)[0...9] {
+          _id,
+          title,
+          slug,
+          category,
+          publishedAt,
+          eventDate,
+          attachments[] {
+            _key,
+            "url": asset->url,
+            "originalFilename": asset->originalFilename
+          }
+        }
+      `;
+
+      const result = await client.fetch(query);
+      console.log(result);
+      setEvents(result);
+    };
+
+    fetchEvents();
+  }, []);
+  console.log(events);
+  const paginatedEvents = events.slice(page * perPage, (page + 1) * perPage);
+  console.log(events);
   const handleNext = () => {
     if ((page + 1) * perPage < events.length) setPage(page + 1);
   };
   const handlePrev = () => {
     if (page > 0) setPage(page - 1);
   };
-
-  const paginatedEvents = events.slice(page * perPage, (page + 1) * perPage);
 
   return (
     <section className="py-12 bg-gray-50">
@@ -65,27 +58,42 @@ export default function UpcomingEventsPanel() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {paginatedEvents.map((event) => (
+          {paginatedEvents.map((event: Notice, index) => (
             <div
-              key={event.id}
+              key={index}
               className="bg-white shadow-md rounded-lg overflow-hidden border"
             >
-              <Image
-                height={40}
-                width={40}
-                src={event.image}
-                alt={event.title}
-                className="w-full h-40 object-cover"
-              />
+              {event.attachment?.asset?.url &&
+              event.attachment.asset.mimeType?.startsWith("image") ? (
+                <Image
+                  height={500}
+                  width={800}
+                  src={event.attachment.asset.url}
+                  alt={event.title}
+                  className="w-full h-40 object-cover"
+                />
+              ) : (
+                <div className="w-full h-40 bg-gray-100 flex items-center justify-center text-gray-500 italic">
+                  No Preview
+                </div>
+              )}
+
               <div className="p-4">
                 <div className="flex items-center text-sm text-gray-600 mb-2">
                   <FaCalendarAlt className="mr-2 text-green-600" />
-                  {event.date}
+                  {new Date(event.eventDate).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
                 </div>
                 <h3 className="font-semibold text-lg mb-2 text-gray-800">
                   {event.title}
                 </h3>
-                <button className="mt-2 inline-block text-sm text-white bg-green-600 hover:bg-green-700 px-3 py-1 rounded">
+                <button
+                  onClick={() => router.push(`/notices/${event.slug.current}`)}
+                  className="mt-2 inline-block text-sm text-white bg-green-600 hover:bg-green-700 px-3 py-1 rounded"
+                >
                   View Details
                 </button>
               </div>
@@ -93,7 +101,7 @@ export default function UpcomingEventsPanel() {
           ))}
         </div>
 
-        {/* Pagination Button */}
+        {/* Pagination Controls */}
         <div className="flex justify-center gap-4 mt-8">
           <button
             onClick={handlePrev}

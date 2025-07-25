@@ -1,77 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import Image from "next/image";
-
-// ✅ Fake data for now
-const news = [
-  {
-    id: 1,
-    title: "Admission Notice 2025",
-    date: "15 July 2025",
-    image: "/news1.jpg",
-  },
-  {
-    id: 2,
-    title: "College Week Cultural Program",
-    date: "12 July 2025",
-    image: "/news2.jpg",
-  },
-  {
-    id: 3,
-    title: "Library Renovation Completed",
-    date: "10 July 2025",
-    image: "/news3.jpg",
-  },
-  {
-    id: 4,
-    title: "New Courses Introduced",
-    date: "08 July 2025",
-    image: "/news4.jpg",
-  },
-  {
-    id: 5,
-    title: "Annual Sports Event",
-    date: "05 July 2025",
-    image: "/news5.jpg",
-  },
-  {
-    id: 6,
-    title: "Results Published (2025)",
-    date: "01 July 2025",
-    image: "/news6.jpg",
-  },
-  {
-    id: 7,
-    title: "Tree Plantation Program",
-    date: "28 June 2025",
-    image: "/news7.jpg",
-  },
-  {
-    id: 8,
-    title: "Seminar on Career Planning",
-    date: "25 June 2025",
-    image: "/news8.jpg",
-  },
-  {
-    id: 9,
-    title: "Students' Blood Donation Camp",
-    date: "22 June 2025",
-    image: "/news9.jpg",
-  },
-];
+import Link from "next/link";
+import { client } from "@/lib/sanity";
+import { Notice } from "@/app/types/Notice";
 
 export default function LatestNewsPanel() {
+  const [news, setNews] = useState<Notice[]>([]);
   const [page, setPage] = useState(0);
   const perPage = 3;
 
-  const handleNext = () => {
-    if ((page + 1) * perPage < news.length) setPage(page + 1);
-  };
-  const handlePrev = () => {
-    if (page > 0) setPage(page - 1);
-  };
+  useEffect(() => {
+    const fetchNews = async () => {
+      const query = `*[_type == "notice" && published == true && archived == false && category == "news"] | order(publishedAt desc)[0...9] {
+        title,
+        slug,
+        publishedAt,
+        attachments[0]{asset->{url, originalFilename, mimeType}},
+      }`;
+
+      const result = await client.fetch(query);
+      setNews(result);
+    };
+
+    fetchNews();
+  }, []);
 
   const paginatedNews = news.slice(page * perPage, (page + 1) * perPage);
 
@@ -82,46 +37,68 @@ export default function LatestNewsPanel() {
           📌 Latest News
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {paginatedNews.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white shadow-md rounded-lg overflow-hidden border"
-            >
-              <Image
-                src={item.image}
-                alt={item.title}
-                width={40}
-                height={40}
-                className="w-full h-40 object-cover"
-              />
-              <div className="p-4">
-                <div className="flex items-center text-sm text-gray-600 mb-2">
-                  <FaCalendarAlt className="mr-2 text-blue-600" />
-                  {item.date}
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {paginatedNews.map((item, i) => (
+              <div
+                key={i}
+                className="bg-white shadow-md rounded-lg overflow-hidden border"
+              >
+                {item.attachments?.asset?.url &&
+                item.attachments.asset.mimeType?.startsWith("image") ? (
+                  <div className="w-full h-40 bg-gray-100 relative">
+                    <Image
+                      src={item.attachments.asset.url}
+                      alt={item.title}
+                      fill
+                      className="object-cover rounded-t-md"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-full h-40 bg-gray-100 flex items-center justify-center text-gray-500 italic">
+                    No Preview
+                  </div>
+                )}
+
+                <div className="p-4">
+                  <div className="flex items-center text-sm text-gray-600 mb-2">
+                    <FaCalendarAlt className="mr-2 text-blue-600" />
+                    {new Date(item.publishedAt).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </div>
+                  <h3 className="font-semibold text-lg mb-2 text-gray-800">
+                    {item.title}
+                  </h3>
+                  <Link
+                    href={`/notices/${item.slug.current}`}
+                    className="mt-2 inline-block text-sm text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded"
+                  >
+                    Read More
+                  </Link>
                 </div>
-                <h3 className="font-semibold text-lg mb-2 text-gray-800">
-                  {item.title}
-                </h3>
-                <button className="mt-2 inline-block text-sm text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">
-                  Read More
-                </button>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* Pagination Button */}
+        {/* Pagination Controls */}
         <div className="flex justify-center gap-4 mt-8">
           <button
-            onClick={handlePrev}
+            onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
             disabled={page === 0}
             className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
           >
             ⬅️ Prev
           </button>
           <button
-            onClick={handleNext}
+            onClick={() =>
+              setPage((prev) =>
+                (prev + 1) * perPage < news.length ? prev + 1 : prev
+              )
+            }
             disabled={(page + 1) * perPage >= news.length}
             className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
           >

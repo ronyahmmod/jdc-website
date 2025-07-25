@@ -1,5 +1,9 @@
 "use client";
 
+import type {
+  Stats,
+  StatsPanel as StatsPanelType,
+} from "@/app/types/StatsPanel";
 import {
   FaUniversity,
   FaBookOpen,
@@ -7,35 +11,39 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 
-const items = [
-  { icon: <FaCalendarAlt size={28} />, label: "Founded", value: "1984" },
-  { icon: <FaUniversity size={28} />, label: "Departments", value: "08" },
-  { icon: <FaUsers size={28} />, label: "Regular Students", value: "1500+" },
-  { icon: <FaBookOpen size={28} />, label: "Subjects", value: "25+" },
-];
+const icons = [FaCalendarAlt, FaUsers, FaUniversity, FaBookOpen];
 
-export default function StatsPanel() {
+export default function StatsPanel({ data }: { data: StatsPanelType }) {
+  const bgUrl = data?.background?.image?.asset?.url;
+
   return (
     <section
-      className="bg-cover bg-center relative py-12 px-4"
-      style={{ backgroundImage: "url('/campus.jpg')" }}
+      className="relative py-12 px-4 bg-center bg-cover min-h-[200px]"
+      style={{
+        backgroundImage: bgUrl ? `url(${bgUrl})` : "none",
+      }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/60 z-0" />
 
-      <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-white text-center">
-        {items.map((item, i) => (
-          <div key={i} className="flex flex-col items-center">
-            {/* Circle with Icon */}
-            <div className="w-24 h-24 flex items-center justify-center border-2 border-white rounded-full bg-white/10 backdrop-blur-md mb-2 shadow-md">
-              {item.icon}
+      {/* Content */}
+      <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-white text-center justify-center">
+        {data?.stats?.map((item: Stats, i: number) => {
+          const Icon = icons[i] || FaBookOpen;
+          return (
+            <div key={i} className="flex flex-col items-center justify-center">
+              {/* Icon */}
+              <div className="w-24 h-24 flex items-center justify-center border-2 border-white rounded-full bg-white/10 backdrop-blur-md mb-2 shadow-md">
+                <Icon size={28} />
+              </div>
+              {/* Text */}
+              <div>
+                <h3 className="text-lg font-semibold">{item.label}</h3>
+                <p className="text-sm">{item.value}</p>
+              </div>
             </div>
-            {/* Label and Value */}
-            <div>
-              <h3 className="text-lg font-semibold">{item.label}</h3>
-              <p className="text-sm">{item.value}</p>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
