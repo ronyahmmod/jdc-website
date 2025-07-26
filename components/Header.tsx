@@ -9,7 +9,7 @@ const navItems = [
   { label: "হোম", href: "/" },
   { label: "কলেজ পরিচিতি", href: "/about" },
   { label: "পরিচালনা পর্ষদ", href: "/gb" },
-  { label: "শিক্ষকবৃন্দ", href: "/teacher" },
+  { label: "শিক্ষকবৃন্দ", href: "/teachers" },
   { label: "কর্মচারীবৃন্দ", href: "/stuff" },
   { label: "রুটিন", href: "/routine" },
   { label: "শিক্ষার্থী তথ্য", href: "/studentinfo" },
