@@ -62,6 +62,7 @@ export default function HeroSlider() {
               {slide.buttonText && slide.buttonLink && (
                 <a
                   href={slide.buttonLink}
+                  target="_blank"
                   className="inline-block bg-white text-black px-5 py-2 rounded-md font-medium hover:bg-gray-200 transition animate-fade-in delay-300"
                 >
                   {slide.buttonText}

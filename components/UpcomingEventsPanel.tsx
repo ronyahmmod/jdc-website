@@ -8,12 +8,21 @@ import { client } from "@/lib/sanity";
 import { Notice } from "@/app/types/Notice";
 import { groq } from "next-sanity";
 
+type NoticeWithAttachment = Notice & {
+  attachment?: {
+    asset?: {
+      url: string;
+      originalFilename: string;
+      mimeType: string;
+    };
+  };
+};
+
 export default function UpcomingEventsPanel() {
-  const [events, setEvents] = useState<Notice[]>([]);
+  const [events, setEvents] = useState<NoticeWithAttachment[]>([]);
   const [page, setPage] = useState(0);
   const perPage = 3;
   const router = useRouter();
-  console.log("Upcomming events");
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -25,7 +34,7 @@ export default function UpcomingEventsPanel() {
           category,
           publishedAt,
           eventDate,
-          attachments[] {
+          "attachment":attachments[0] {
             _key,
             "url": asset->url,
             "originalFilename": asset->originalFilename
@@ -34,15 +43,15 @@ export default function UpcomingEventsPanel() {
       `;
 
       const result = await client.fetch(query);
-      console.log(result);
+
       setEvents(result);
     };
 
     fetchEvents();
   }, []);
-  console.log(events);
+
   const paginatedEvents = events.slice(page * perPage, (page + 1) * perPage);
-  console.log(events);
+
   const handleNext = () => {
     if ((page + 1) * perPage < events.length) setPage(page + 1);
   };
@@ -58,7 +67,7 @@ export default function UpcomingEventsPanel() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {paginatedEvents.map((event: Notice, index) => (
+          {paginatedEvents.map((event: NoticeWithAttachment, index) => (
             <div
               key={index}
               className="bg-white shadow-md rounded-lg overflow-hidden border"
@@ -81,11 +90,13 @@ export default function UpcomingEventsPanel() {
               <div className="p-4">
                 <div className="flex items-center text-sm text-gray-600 mb-2">
                   <FaCalendarAlt className="mr-2 text-green-600" />
-                  {new Date(event.eventDate).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })}
+                  {event.eventDate
+                    ? new Date(event.eventDate).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })
+                    : "No Date"}
                 </div>
                 <h3 className="font-semibold text-lg mb-2 text-gray-800">
                   {event.title}

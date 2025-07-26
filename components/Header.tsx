@@ -8,9 +8,11 @@ import { useEffect, useState } from "react";
 const navItems = [
   { label: "হোম", href: "/" },
   { label: "কলেজ পরিচিতি", href: "/about" },
-  { label: "রুটিন", href: "/routine" },
+  { label: "পরিচালনা পর্ষদ", href: "/gb" },
   { label: "শিক্ষকবৃন্দ", href: "/teacher" },
   { label: "কর্মচারীবৃন্দ", href: "/stuff" },
+  { label: "রুটিন", href: "/routine" },
+  { label: "শিক্ষার্থী তথ্য", href: "/studentinfo" },
   { label: "বিজ্ঞপ্তি", href: "/notices" },
   { label: "সেবা", href: "/service" },
   { label: "যোগাযোগ", href: "/contact" },

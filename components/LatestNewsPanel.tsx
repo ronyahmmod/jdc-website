@@ -6,9 +6,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { client } from "@/lib/sanity";
 import { Notice } from "@/app/types/Notice";
+type NoticeWithAttachment = Notice & {
+  attachment?: {
+    asset?: {
+      url: string;
+      originalFilename: string;
+      mimeType: string;
+    };
+  };
+};
 
 export default function LatestNewsPanel() {
-  const [news, setNews] = useState<Notice[]>([]);
+  const [news, setNews] = useState<NoticeWithAttachment[]>([]);
   const [page, setPage] = useState(0);
   const perPage = 3;
 
@@ -18,7 +27,7 @@ export default function LatestNewsPanel() {
         title,
         slug,
         publishedAt,
-        attachments[0]{asset->{url, originalFilename, mimeType}},
+       "attachment": attachments[0]{asset->{url, originalFilename, mimeType}},
       }`;
 
       const result = await client.fetch(query);
@@ -39,16 +48,16 @@ export default function LatestNewsPanel() {
 
         <div className="flex justify-center">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {paginatedNews.map((item, i) => (
+            {paginatedNews.map((item: NoticeWithAttachment, i) => (
               <div
                 key={i}
                 className="bg-white shadow-md rounded-lg overflow-hidden border"
               >
-                {item.attachments?.asset?.url &&
-                item.attachments.asset.mimeType?.startsWith("image") ? (
+                {item.attachment?.asset?.url &&
+                item.attachment.asset.mimeType?.startsWith("image") ? (
                   <div className="w-full h-40 bg-gray-100 relative">
                     <Image
-                      src={item.attachments.asset.url}
+                      src={item.attachment.asset.url}
                       alt={item.title}
                       fill
                       className="object-cover rounded-t-md"

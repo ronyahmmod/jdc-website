@@ -16,7 +16,7 @@ export interface Notice {
   archived?: boolean;
   publishedAt: string;
   updatedAt?: string;
-  eventDate?: string;
+  eventDate?: Date;
 }
 
 export interface Attachment {
@@ -30,5 +30,6 @@ export interface Attachment {
     _id: string;
     url: string;
     originalFilename: string;
+    mimeType: string;
   };
 }

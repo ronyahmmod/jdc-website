@@ -1,19 +1,27 @@
-const videos = [
-  {
-    id: "XxVg_s8xAms",
-    title: "College Introductory Video",
-  },
-  {
-    id: "L_jWHffIx5E",
-    title: "Annual Cultural Program 2025",
-  },
-  {
-    id: "dQw4w9WgXcQ",
-    title: "Science Fair Highlights",
-  },
-];
+"use client";
+
+import { useEffect, useState } from "react";
+import { client } from "@/lib/sanity";
+import { Video } from "@/app/types/Video";
 
 export default function VideoGalleryPanel() {
+  const [videos, setVideos] = useState<Video[]>([]);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      const query = `*[_type == "video"] | order(publishedAt desc)[0...3] {
+        _id,
+        title,
+        youtubeId,
+        publishedAt
+      }`;
+      const result = await client.fetch(query);
+      setVideos(result);
+    };
+
+    fetchVideos();
+  }, []);
+
   return (
     <section className="bg-gradient-to-r from-indigo-50 to-purple-100 py-12">
       <div className="max-w-6xl mx-auto px-4">
@@ -24,12 +32,12 @@ export default function VideoGalleryPanel() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {videos.map((video) => (
             <div
-              key={video.id}
+              key={video._id}
               className="bg-white rounded-lg shadow overflow-hidden"
             >
               <div className="aspect-w-16 aspect-h-9">
                 <iframe
-                  src={`https://www.youtube.com/embed/${video.id}`}
+                  src={`https://www.youtube.com/embed/${video.youtubeId}`}
                   title={video.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
