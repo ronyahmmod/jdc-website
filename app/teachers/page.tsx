@@ -27,18 +27,20 @@ export default async function TeachersPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6 text-center text-green-800">
-        👨‍🏫 শিক্ষকগণের তথ্য
+        👨‍🏫 Teacher Information
       </h1>
 
       <div className="overflow-x-auto">
         <table className="min-w-full border border-green-600 rounded shadow overflow-hidden">
           <thead className="bg-green-200 text-left text-green-900">
             <tr>
-              <th className="px-4 py-3 border border-green-600">ছবি</th>
-              <th className="px-4 py-3 border border-green-600">নাম</th>
-              <th className="px-4 py-3 border border-green-600">পদবি</th>
-              <th className="px-4 py-3 border border-green-600">বিষয়</th>
-              <th className="px-4 py-3 border border-green-600">ফোন</th>
+              <th className="px-4 py-3 border border-green-600">Image</th>
+              <th className="px-4 py-3 border border-green-600">Name</th>
+              <th className="px-4 py-3 border border-green-600">Designation</th>
+              <th className="px-4 py-3 border border-green-600">Subject</th>
+              <th className="px-4 py-3 border border-green-600">
+                Mobile Number
+              </th>
             </tr>
           </thead>
           <tbody>
