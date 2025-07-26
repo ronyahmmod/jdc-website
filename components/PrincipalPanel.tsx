@@ -42,7 +42,7 @@ export default function PrincipalPanel() {
                 alt={person.name}
                 width={200}
                 height={200}
-                className="object-cover w-full h-full"
+                className="object-cover object-top w-full h-full"
               />
             </div>
 

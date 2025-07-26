@@ -5,56 +5,45 @@ import { groq } from "next-sanity";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-interface Teacher {
+interface Staff {
   _id: string;
   name: string;
   designation: string;
-  subject: string;
   mobileNumber: string;
-  photoUrl?: string;
-  joiningDate: string;
   email: string;
+  joiningDate: string;
+  photoUrl?: string;
 }
 
-export default function TeachersPage() {
-  const [teachers, setTeachers] = useState<Teacher[]>([]);
+export default function StaffsPage() {
+  const [staffs, setStaffs] = useState<Staff[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const teachersPerPage = 15;
+  const staffsPerPage = 15;
 
   useEffect(() => {
     const fetchData = async () => {
       const query = groq`
-        *[_type == "teacher"] | order(weight asc) {
+        *[_type == "staff"] | order(weight asc) {
           _id,
           name,
           designation,
-          subject,
-          joiningDate,
           mobileNumber,
           email,
+          joiningDate,
           "photoUrl": photo.asset->url
         }
       `;
       const data = await client.fetch(query);
-      setTeachers(data);
+      setStaffs(data);
     };
 
     fetchData();
   }, []);
 
-  const indexOfLastTeacher = currentPage * teachersPerPage;
-  const indexOfFirstTeacher = indexOfLastTeacher - teachersPerPage;
-  const currentTeachers = teachers.slice(
-    indexOfFirstTeacher,
-    indexOfLastTeacher
-  );
-  const totalPages = Math.ceil(teachers.length / teachersPerPage);
-
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+  const indexOfLast = currentPage * staffsPerPage;
+  const indexOfFirst = indexOfLast - staffsPerPage;
+  const currentStaffs = staffs.slice(indexOfFirst, indexOfLast);
+  const totalPages = Math.ceil(staffs.length / staffsPerPage);
 
   const handlePrint = () => {
     window.print();
@@ -64,26 +53,25 @@ export default function TeachersPage() {
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6 print:hidden">
         <h1 className="text-2xl font-bold text-green-800">
-          👨‍🏫 Teacher Information
+          👷 Staff Information
         </h1>
         <button
           onClick={handlePrint}
-          className="px-4 py-2 bg-green-700 text-white rounded shadow hover:bg-green-800 transition"
+          className="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition"
         >
           🖨 Print
         </button>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full border border-green-600 rounded shadow overflow-hidden">
+        <table className="min-w-full border border-green-600 rounded shadow">
           <thead className="bg-green-200 text-left text-green-900">
             <tr>
               <th className="px-4 py-3 border border-green-600">Image</th>
               <th className="px-4 py-3 border border-green-600">
-                Name and email
+                Name & Email
               </th>
               <th className="px-4 py-3 border border-green-600">Designation</th>
-              <th className="px-4 py-3 border border-green-600">Subject</th>
               <th className="px-4 py-3 border border-green-600">
                 Joining Date
               </th>
@@ -94,17 +82,17 @@ export default function TeachersPage() {
             </tr>
           </thead>
           <tbody>
-            {currentTeachers.map((teacher, index) => (
+            {currentStaffs.map((staff, index) => (
               <tr
-                key={teacher._id}
+                key={staff._id}
                 className={`${index % 2 === 0 ? "bg-white" : "bg-green-50"} text-gray-800`}
               >
                 <td className="px-4 py-3 border border-green-600">
-                  {teacher.photoUrl ? (
+                  {staff.photoUrl ? (
                     <div className="w-16 h-16 rounded-full overflow-hidden border border-green-600">
                       <Image
-                        src={teacher.photoUrl}
-                        alt={teacher.name}
+                        src={staff.photoUrl}
+                        alt={staff.name}
                         width={64}
                         height={64}
                         className="w-full h-full object-cover object-top"
@@ -117,19 +105,17 @@ export default function TeachersPage() {
                   )}
                 </td>
                 <td className="px-4 py-3 border border-green-600">
-                  {teacher.name}, <strong>{teacher.email}</strong>
+                  {staff.name} <br />
+                  <span className="text-sm text-gray-600">{staff.email}</span>
                 </td>
                 <td className="px-4 py-3 border border-green-600">
-                  {teacher.designation}
+                  {staff.designation}
                 </td>
                 <td className="px-4 py-3 border border-green-600">
-                  {teacher.subject}
+                  {staff.joiningDate}
                 </td>
                 <td className="px-4 py-3 border border-green-600">
-                  {teacher.joiningDate}
-                </td>
-                <td className="px-4 py-3 border border-green-600">
-                  {teacher.mobileNumber}
+                  {staff.mobileNumber}
                 </td>
                 <td className="px-4 py-3 border border-green-600 hidden print:table-cell text-center">
                   ___________________
@@ -141,9 +127,9 @@ export default function TeachersPage() {
       </div>
 
       {/* Pagination */}
-      <div className="mt-6 flex justify-center items-center space-x-2 print:hidden">
+      <div className="mt-6 flex justify-center space-x-2 print:hidden">
         <button
-          onClick={() => handlePageChange(currentPage - 1)}
+          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
           className="px-3 py-1 bg-green-600 text-white rounded disabled:opacity-50"
         >
@@ -151,8 +137,8 @@ export default function TeachersPage() {
         </button>
         {Array.from({ length: totalPages }, (_, i) => (
           <button
-            key={i + 1}
-            onClick={() => handlePageChange(i + 1)}
+            key={i}
+            onClick={() => setCurrentPage(i + 1)}
             className={`px-3 py-1 rounded ${
               currentPage === i + 1
                 ? "bg-green-800 text-white"
@@ -163,7 +149,7 @@ export default function TeachersPage() {
           </button>
         ))}
         <button
-          onClick={() => handlePageChange(currentPage + 1)}
+          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
           className="px-3 py-1 bg-green-600 text-white rounded disabled:opacity-50"
         >
