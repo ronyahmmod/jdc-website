@@ -19,12 +19,25 @@ const getFileType = (filename: string): "image" | "pdf" | "other" => {
   return "other";
 };
 
+// Function to get the first media file (image or PDF) for preview
+const getPrimaryMedia = (attachments: Attachment[]) => {
+  const image = attachments.find(
+    (file) => getFileType(file.asset.originalFilename) === "image"
+  );
+  if (image) return { type: "image", file: image };
+  const pdf = attachments.find(
+    (file) => getFileType(file.asset.originalFilename) === "pdf"
+  );
+  if (pdf) return { type: "pdf", file: pdf };
+  return null;
+};
+
 export default async function NoticeDetails({ params }: PageProps) {
   // Resolve the slug from params
   const { slug } = await params;
 
   // Query to fetch notice details with attachments
-  const query = groq`
+  const noticeQuery = groq`
     *[_type == "notice" && slug.current == $slug][0]{
       _id,
       title,
@@ -41,18 +54,52 @@ export default async function NoticeDetails({ params }: PageProps) {
     }
   `;
 
-  // Fetch notice data from Sanity
-  const notice = await client.fetch(query, { slug });
+  // Query to fetch institution logo for fallback
+  const logoQuery = groq`
+    *[_type == "institutionInfo"] | order(_createdAt desc)[0]{
+      logo
+    }
+  `;
+
+  // Fetch notice and logo data from Sanity
+  const notice = await client.fetch(noticeQuery, { slug });
+  const institutionInfo = await client.fetch(logoQuery);
 
   // Return 404 if notice is not found
   if (!notice) return notFound();
 
+  // Get primary media for preview (image or PDF)
+  const primaryMedia =
+    notice.attachments?.length > 0 ? getPrimaryMedia(notice.attachments) : null;
+  // Construct page URL for sharing
+  const pageUrl = `https://yourdomain.com/notices/${slug}`; // Replace with your actual domain
+  // Use primary media or fallback logo for social sharing
+  const shareImage =
+    primaryMedia?.file.asset.url || institutionInfo?.logo?.asset?.url || "";
+
   return (
     <>
-      {/* Metadata for SEO */}
+      {/* Metadata for SEO and social sharing */}
       <Head>
         <title>{notice.title} | Notice</title>
         <meta name="description" content={notice.summary?.slice(0, 150)} />
+        {/* Open Graph metadata for Facebook and others */}
+        <meta property="og:title" content={notice.title} />
+        <meta
+          property="og:description"
+          content={notice.summary?.slice(0, 150)}
+        />
+        <meta property="og:url" content={pageUrl} />
+        {shareImage && <meta property="og:image" content={shareImage} />}
+        <meta property="og:type" content="article" />
+        {/* Twitter Card metadata */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={notice.title} />
+        <meta
+          name="twitter:description"
+          content={notice.summary?.slice(0, 150)}
+        />
+        {shareImage && <meta name="twitter:image" content={shareImage} />}
       </Head>
 
       <main className="max-w-3xl mx-auto py-10 px-4">
@@ -65,12 +112,78 @@ export default async function NoticeDetails({ params }: PageProps) {
           প্রকাশিত: {format(new Date(notice.publishedAt), "dd MMM yyyy")}
         </p>
 
+        {/* Primary media preview */}
+        {primaryMedia ? (
+          <div className="mb-6">
+            {primaryMedia.type === "image" ? (
+              <div className="relative w-full h-64">
+                <Image
+                  src={primaryMedia.file.asset.url}
+                  alt={primaryMedia.file.asset.originalFilename}
+                  fill
+                  className="object-contain rounded-md"
+                  sizes="(max-width: 768px) 100vw, 768px"
+                />
+              </div>
+            ) : (
+              <div className="w-full h-64">
+                <iframe
+                  src={`${primaryMedia.file.asset.url}#toolbar=0`}
+                  className="w-full h-full rounded-md"
+                  title={primaryMedia.file.asset.originalFilename}
+                />
+              </div>
+            )}
+          </div>
+        ) : (
+          // Fallback logo preview
+          institutionInfo?.logo && (
+            <div className="mb-6 relative w-32 h-32 mx-auto">
+              <Image
+                src={institutionInfo.logo.asset.url}
+                alt="Institution Logo"
+                fill
+                className="object-contain rounded-md"
+                sizes="128px"
+              />
+            </div>
+          )
+        )}
+
         {/* Notice summary */}
         {notice.summary && (
           <p className="text-gray-800 mb-6 whitespace-pre-line">
             {notice.summary}
           </p>
         )}
+
+        {/* Social sharing buttons */}
+        <div className="mb-6 flex gap-4">
+          <a
+            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Facebook
+          </a>
+          <a
+            href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(notice.title)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 transition-colors"
+          >
+            Twitter
+          </a>
+          <a
+            href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${notice.title} ${pageUrl}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
+          >
+            WhatsApp
+          </a>
+        </div>
 
         {/* Attachments grid */}
         {notice.attachments?.length > 0 && (
