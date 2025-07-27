@@ -36,7 +36,7 @@ export default async function RootLayout({
     <html lang="bn">
       <body className="bg-gray-50 text-gray-900">
         <Header />
-        <Marquee headlines={headlines} />
+        <Marquee />
         <main className="max-w-5xl mx-auto p-4">{children}</main>
         <Footer />
         <BackToTopButton />

@@ -1,5 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { client } from "@/lib/sanity";
+import { groq } from "next-sanity";
+
 interface Headline {
   text: string;
   link?: string;
@@ -7,8 +11,35 @@ interface Headline {
   icon?: string;
 }
 
-export default function Marquee({ headlines }: { headlines: Headline[] }) {
-  // Return null if no headlines are provided
+export default function Marquee() {
+  // State to store fetched notices
+  const [headlines, setHeadlines] = useState<Headline[]>([]);
+
+  // Fetch notices with important==true on component mount
+  useEffect(() => {
+    async function fetchImportantNotices() {
+      const query = groq`
+        *[_type == "notice" && important == true && published==true] | order(publishedAt desc) {
+          title,
+          slug
+        }
+      `;
+      const notices = await client.fetch(query);
+      // Map notices to Headline interface
+      const mappedHeadlines: Headline[] = notices.map(
+        (notice: { title: string; slug: { current: string } }) => ({
+          text: notice.title,
+          link: `/notices/${notice.slug.current}`,
+          newTab: false,
+          icon: "📢", // Default icon for notices
+        })
+      );
+      setHeadlines(mappedHeadlines);
+    }
+    fetchImportantNotices();
+  }, []);
+
+  // Return null if no headlines are available
   if (!headlines?.length) return null;
 
   return (
@@ -68,7 +99,7 @@ export default function Marquee({ headlines }: { headlines: Headline[] }) {
         .marquee-content {
           display: inline-block;
           white-space: nowrap;
-          animation: marquee 30s ease-in-out infinite;
+          animation: marquee 50s ease-in-out infinite;
         }
         @keyframes marquee {
           0% {
