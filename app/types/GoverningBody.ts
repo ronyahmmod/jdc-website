@@ -14,8 +14,8 @@ export interface GBMember {
 }
 
 export interface GoverningBody {
-  approvalDate: string;
-  termStart: string;
-  termEnd: string;
+  approvalDate: Date;
+  termStart: Date;
+  termEnd: Date;
   members: GBMember[];
 }

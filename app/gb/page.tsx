@@ -58,26 +58,30 @@ export default function GoverningBodyPanel() {
 
   const renderRow = (person: GBMember, position: string) => (
     <tr className="border-b" key={position}>
-      <td className="p-2 text-sm text-center">
+      <td className="p-2 text-sm text-center border">
         {person.photo?.asset?.url ? (
-          <Image
-            src={person.photo.asset.url}
-            alt={person.name}
-            width={60}
-            height={60}
-            className="rounded-full mx-auto object-contain"
-          />
+          <div className="w-16 h-16 rounded-full overflow-hidden border border-green-600">
+            <Image
+              src={person.photo.asset.url}
+              alt={person.name}
+              width={60}
+              height={60}
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
         ) : (
           <div className="w-[60px] h-[60px] bg-gray-200 rounded-full mx-auto flex items-center justify-center text-gray-500">
             N/A
           </div>
         )}
       </td>
-      <td className="p-2 text-sm">{person.name}</td>
-      <td className="p-2 text-sm">{person.role}</td>
-      <td className="p-2 text-sm">{person.occupation}</td>
-      <td className="p-2 text-sm">{person.mobile}</td>
-      <td className="p-2 text-sm">{person.address}</td>
+      <td className="p-2 text-sm border text-center uppercase">
+        <strong>{person.name}</strong>
+      </td>
+      <td className="p-2 text-sm border uppercase">{person.role}</td>
+      <td className="p-2 text-sm border uppercase">{person.occupation}</td>
+      <td className="p-2 text-sm border uppercase">{person.mobile}</td>
+      <td className="p-2 text-sm border uppercase">{person.address}</td>
     </tr>
   );
 
@@ -85,9 +89,13 @@ export default function GoverningBodyPanel() {
     <section className="py-12 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-2xl font-bold text-center text-green-800 mb-6">
-          🏛️ Governing Body ({new Date(committee.approvalDate).getFullYear()} -{" "}
-          {new Date(committee.termEnd).getFullYear()})
+          🏛️ Governing Body
         </h2>
+        <p className="text-center text-red-500">
+          (Approved on: {new Date(committee.approvalDate).toDateString()}) Valid
+          Till: ({new Date(committee.termStart).toDateString()} --{" "}
+          {new Date(committee.termEnd).toDateString()})
+        </p>
 
         <div className="flex justify-end mb-4">
           <button
@@ -106,7 +114,7 @@ export default function GoverningBodyPanel() {
           <table className="min-w-full table-auto border-collapse">
             <thead className="bg-green-100 text-gray-800 text-sm">
               <tr>
-                <th className="p-2 border">Photo</th>
+                <th className="p-2 border py-4">Photo</th>
                 <th className="p-2 border">Name</th>
                 <th className="p-2 border">Role</th>
                 <th className="p-2 border">Occupation</th>
