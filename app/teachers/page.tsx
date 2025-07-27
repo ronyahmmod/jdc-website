@@ -85,7 +85,7 @@ export default function TeachersPage() {
               <th className="px-4 py-3 border border-green-600">Designation</th>
               <th className="px-4 py-3 border border-green-600">Subject</th>
               <th className="px-4 py-3 border border-green-600">
-                Joining Date
+                Joining Date (YYYY-MM-DD)
               </th>
               <th className="px-4 py-3 border border-green-600">Mobile</th>
               <th className="px-4 py-3 border border-green-600 hidden print:table-cell">
