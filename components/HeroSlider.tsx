@@ -9,7 +9,7 @@ import { Slide } from "@/app/types/Slide";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const query = groq`*[_type == "heroImage" && showInSlider == true] | order(_createdAt desc)[0...5] {
+const query = groq`*[_type == "heroImage" && showInSlider == true] | order(_createdAt desc) {
   _id, title, subtitle, image, buttonText, buttonLink
 }`;
 

@@ -5,7 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const navItems = [
+// Define navigation items with optional target and subdomain properties
+type NavItem = {
+  label: string;
+  href: string;
+  target?: string;
+  subdomain?: string;
+  subItems?: NavItem[];
+};
+
+const navItems: NavItem[] = [
   { label: "হোম", href: "/" },
   { label: "কলেজ পরিচিতি", href: "/about" },
   { label: "পরিচালনা পর্ষদ", href: "/gb" },
@@ -14,31 +23,85 @@ const navItems = [
   { label: "ক্লাস রুটিন", href: "/routine" },
   { label: "শিক্ষার্থী তথ্য", href: "/studentinfo" },
   { label: "বিজ্ঞপ্তি", href: "/notices" },
-  { label: "সেবা", href: "/service" },
+  {
+    label: "সেবা",
+    href: "/service",
+    subItems: [
+      // Submenu items with subdomain and target for new tab
+      {
+        label: "Student Services",
+        href: "/",
+        subdomain: "app1",
+        target: "_blank",
+      },
+      {
+        label: "Result",
+        href: "/",
+        subdomain: "result",
+        target: "_blank",
+      },
+      {
+        label: "প্রশিক্ষণ প্রোগ্রাম",
+        href: "/",
+        subdomain: "training",
+        target: "_blank",
+      },
+      { label: "লাইব্রেরি সেবা", href: "/service/library" },
+      { label: "ক্যারিয়ার কাউন্সেলিং", href: "/service/counseling" },
+    ],
+  },
   { label: "যোগাযোগ", href: "/contact" },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [collegeInfo, setCollegeInfo] = useState<InstitutionInfo | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(
+    null
+  );
 
+  // Fetch institution info (logo and name) on component mount
   useEffect(() => {
     async function fetchCollegeInfo() {
       const query = `*[_type == "institutionInfo"] | order(_createdAt desc)[0] {
-      name,
-      logo
-    }`;
+        name,
+        logo
+      }`;
       const data = await client.fetch(query);
       setCollegeInfo(data);
     }
     fetchCollegeInfo();
   }, []);
 
+  // Handle dropdown open with timeout clear
+  const handleMouseEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout); // Prevent premature dropdown close
+    }
+    setDropdownOpen(true);
+  };
+
+  // Handle dropdown close with 200ms delay
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setDropdownOpen(false);
+    }, 200);
+    setDropdownTimeout(timeout);
+  };
+
+  // Construct URL based on subdomain or regular href
+  const getLinkUrl = (item: { href: string; subdomain?: string }) => {
+    if (item.subdomain) {
+      return `https://${item.subdomain}.jibannagardegreecollege.com${item.href}`; // Replace 'example.com' with your actual domain
+    }
+    return item.href;
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo and Title */}
-
         <div className="flex items-center gap-3">
           {collegeInfo?.logo && (
             <Image
@@ -53,16 +116,62 @@ export default function Header() {
           </h1>
         </div>
 
-        {/* Desktop Nav */}
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-gray-700 hover:text-blue-800 font-medium"
-            >
-              {item.label}
-            </Link>
+            <div key={item.href} className="relative group">
+              {item.subItems ? (
+                // Dropdown menu for items with subItems
+                <div
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <button className="text-gray-700 hover:text-blue-800 font-medium flex items-center">
+                    {item.label}
+                    <svg
+                      className="w-4 h-4 ml-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  {dropdownOpen && (
+                    <div
+                      className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10"
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      {item.subItems.map((subItem) => (
+                        <Link
+                          key={subItem.href}
+                          href={getLinkUrl(subItem)}
+                          target={subItem.target || "_self"} // Use _blank for new tab if specified
+                          className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800"
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                // Regular menu item without subItems
+                <Link
+                  href={getLinkUrl(item)}
+                  target={item.target || "_self"}
+                  className="text-gray-700 hover:text-blue-800 font-medium"
+                >
+                  {item.label}
+                </Link>
+              )}
+            </div>
           ))}
         </nav>
 
@@ -87,18 +196,61 @@ export default function Header() {
           </svg>
         </button>
 
-        {/* Mobile Nav */}
+        {/* Mobile Navigation with Scrollbar */}
         {open && (
-          <div className="md:hidden bg-white shadow-sm px-4 pb-4">
+          <div className="md:hidden bg-white shadow-lg absolute top-full left-0 w-full max-h-[70vh] overflow-y-auto transition-all duration-300 ease-in-out">
             {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="block py-2 text-gray-800 border-b"
-                onClick={() => setOpen(false)}
-              >
-                {item.label}
-              </Link>
+              <div key={item.href}>
+                {item.subItems ? (
+                  // Mobile dropdown menu
+                  <div className="border-b border-gray-200">
+                    <button
+                      className="w-full text-left py-3 px-4 text-gray-800 font-medium flex justify-between items-center"
+                      onClick={() => setDropdownOpen((prev) => !prev)}
+                    >
+                      {item.label}
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d={dropdownOpen ? "M19 9l-7 7-7-7" : "M9 5l7 7-7 7"}
+                        />
+                      </svg>
+                    </button>
+                    {dropdownOpen && (
+                      <div className="pl-6 bg-gray-50">
+                        {item.subItems.map((subItem) => (
+                          <Link
+                            key={subItem.href}
+                            href={getLinkUrl(subItem)}
+                            target={subItem.target || "_self"} // Use _blank for new tab if specified
+                            className="block py-2 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-800"
+                            onClick={() => setOpen(false)}
+                          >
+                            {subItem.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  // Regular mobile menu item
+                  <Link
+                    href={getLinkUrl(item)}
+                    target={item.target || "_self"}
+                    className="block py-3 px-4 text-gray-800 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-800 font-medium"
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )}
+              </div>
             ))}
           </div>
         )}

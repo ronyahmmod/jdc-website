@@ -1,7 +1,6 @@
 import { client } from "@/lib/sanity";
 import { groq } from "next-sanity";
 import { format } from "date-fns";
-import Image from "next/image";
 
 interface Routine {
   _id: string;
