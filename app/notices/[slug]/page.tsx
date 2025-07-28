@@ -72,7 +72,7 @@ export default async function NoticeDetails({ params }: PageProps) {
   const primaryMedia =
     notice.attachments?.length > 0 ? getPrimaryMedia(notice.attachments) : null;
   // Construct page URL for sharing
-  const pageUrl = `https://yourdomain.com/notices/${slug}`; // Replace with your actual domain
+  const pageUrl = `https://jibannagardegreecollege.com/notices/${slug}`; // Replace with your actual domain
   // Use primary media or fallback logo for social sharing
   const shareImage =
     primaryMedia?.file.asset.url || institutionInfo?.logo?.asset?.url || "";
