@@ -7,6 +7,9 @@ import BackToTopButton from "@/components/BackToTopButton";
 export const metadata: Metadata = {
   title: "Jibannagar College",
   description: "Official website of Jibannagar College",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default async function RootLayout({
