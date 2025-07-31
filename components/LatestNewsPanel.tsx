@@ -42,7 +42,7 @@ export default function LatestNewsPanel() {
   return (
     <section className="py-12 bg-white">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6 text-center text-blue-900">
+        <h2 className="text-2xl font-bold mb-6 text-center text-accent-600">
           📌 Latest News
         </h2>
 
@@ -64,7 +64,7 @@ export default function LatestNewsPanel() {
                     />
                   </div>
                 ) : (
-                  <div className="w-full h-40 bg-gray-100 flex items-center justify-center text-gray-500 italic">
+                  <div className="w-full h-40 bg-gray-100 flex items-center justify-center text-primary-500 italic">
                     No Preview
                   </div>
                 )}
@@ -83,7 +83,7 @@ export default function LatestNewsPanel() {
                   </h3>
                   <Link
                     href={`/notices/${item.slug.current}`}
-                    className="mt-2 inline-block text-sm text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded"
+                    className="mt-2 inline-block text-sm text-white bg-accent-500 hover:bg-accent-600 px-3 py-1 rounded"
                   >
                     Read More
                   </Link>
@@ -98,7 +98,7 @@ export default function LatestNewsPanel() {
           <button
             onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
             disabled={page === 0}
-            className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+            className="px-4 py-2 rounded text-accent-600 bg-primary-900 hover:bg-primary-800 disabled:opacity-80 cursor-pointer"
           >
             ⬅️ Prev
           </button>
@@ -109,7 +109,7 @@ export default function LatestNewsPanel() {
               )
             }
             disabled={(page + 1) * perPage >= news.length}
-            className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+            className="px-4 py-2 rounded text-accent-600 bg-primary-900 hover:bg-primary-800 disabled:opacity-80 cursor-pointer"
           >
             Next ➡️
           </button>

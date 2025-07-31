@@ -30,7 +30,7 @@ export default function ChairmanMessage() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="max-w-5xl mx-auto bg-white shadow-lg rounded-xl p-6 my-10 flex flex-col md:flex-row items-center gap-6"
+      className="max-w-5xl mx-auto bg-neutral-50 shadow-lg rounded-xl p-6 my-10 flex flex-col md:flex-row items-center gap-6"
     >
       {/* Image Section */}
       <motion.div
@@ -48,7 +48,7 @@ export default function ChairmanMessage() {
         />
         <div className="mt-4 text-center">
           <h3 className="text-lg font-semibold">{data.name}</h3>
-          <p className="text-gray-500 text-sm">{data.designation}</p>
+          <p className="text-neutral-900 text-sm">{data.designation}</p>
         </div>
       </motion.div>
 

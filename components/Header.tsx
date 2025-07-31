@@ -99,7 +99,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-md">
+    <header className="sticky top-0 z-50 bg-neutral-50 text-neutral-50 shadow-md">
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo and Title */}
         <div className="flex items-center gap-3">
@@ -111,8 +111,8 @@ export default function Header() {
               height={50}
             />
           )}
-          <h1 className="text-xl md:text-2xl font-bold text-blue-900">
-            {collegeInfo?.name || "জীবননগর কলেজ"}
+          <h1 className="text-xl md:text-2xl font-bold text-accent-600">
+            {collegeInfo?.name || "জীবননগর ডিগ্রি কলেজ"}
           </h1>
         </div>
 
@@ -126,7 +126,7 @@ export default function Header() {
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <button className="text-gray-700 hover:text-blue-800 font-medium flex items-center">
+                  <button className="text-gray-700 hover:text-gray-600 font-medium flex items-center">
                     {item.label}
                     <svg
                       className="w-4 h-4 ml-1"
@@ -153,7 +153,7 @@ export default function Header() {
                           key={subItem.href}
                           href={getLinkUrl(subItem)}
                           target={subItem.target || "_self"} // Use _blank for new tab if specified
-                          className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800"
+                          className="block px-4 py-2 text-primary-600 hover:bg-blue-50 hover:text-primary-700"
                         >
                           {subItem.label}
                         </Link>

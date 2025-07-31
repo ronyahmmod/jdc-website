@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import "./globals.css";
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
-import Marquee from "@/components/Marquee";
+import MarqueeComponent from "@/components/MarqueeComponent";
 import BackToTopButton from "@/components/BackToTopButton";
 export const metadata: Metadata = {
   title: "Jibannagar College",
@@ -23,7 +23,7 @@ export default async function RootLayout({
           crossOrigin="anonymous"
         ></script>
         <Header />
-        <Marquee />
+        <MarqueeComponent />
         <main className="max-w-5xl mx-auto p-4">{children}</main>
         <Footer />
         <BackToTopButton />

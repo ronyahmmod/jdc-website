@@ -7,19 +7,24 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1a1a1a] text-gray-100 pt-12">
+    <footer className="bg-neutral-900 text-gray-100 pt-12">
       {/* Top Links Panel */}
       <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8 pb-12 border-b border-gray-700">
         {/* Useful Links */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">🔗 Useful Links</h3>
+          <h3 className="text-lg font-semibold mb-4 text-accent-600 flex items-center gap-2">
+            <span className="inline-block bg-accent-600 rounded-full px-2 py-1.5 text-xs font-bold mr-2">
+              🔗
+            </span>
+            Useful Links
+          </h3>
           <ul className="space-y-2 text-sm">
             <li>
               <a
                 href="https://moedu.gov.bd"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-blue-400 flex items-center gap-2"
+                className="hover:text-accent-400 flex items-center gap-2"
               >
                 Ministry of Education <FaExternalLinkAlt size={12} />
               </a>
@@ -29,7 +34,7 @@ export default function Footer() {
                 href="https://pmo.gov.bd"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-blue-400 flex items-center gap-2"
+                className="hover:text-accent-400 flex items-center gap-2"
               >
                 Prime Minister’s Office <FaExternalLinkAlt size={12} />
               </a>
@@ -39,7 +44,7 @@ export default function Footer() {
                 href="https://ugc.gov.bd"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-blue-400 flex items-center gap-2"
+                className="hover:text-accent-400 flex items-center gap-2"
               >
                 UGC Bangladesh <FaExternalLinkAlt size={12} />
               </a>

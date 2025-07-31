@@ -64,38 +64,38 @@ export default function TeachersPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6 print:hidden">
-        <h1 className="text-2xl font-bold text-green-800">
+        <h1 className="text-2xl font-bold text-accent-600">
           👨‍🏫 Teacher Information
         </h1>
         <button
           onClick={handlePrint}
-          className="px-4 py-2 bg-green-700 text-white rounded shadow hover:bg-green-800 transition"
+          className="px-4 py-2 bg-primary-600 text-white rounded shadow hover:bg-primary-700 transition cursor-pointer"
         >
           🖨 Print
         </button>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full border text-sm border-green-600 rounded shadow overflow-hidden">
-          <thead className="bg-green-200 text-left text-green-900">
+        <table className="min-w-full border text-sm border-primary-600 rounded shadow overflow-hidden">
+          <thead className="bg-accent-400 text-left text-accent-50">
             <tr>
-              <th className="px-4 py-3 border text-center border-green-600">
+              <th className="px-4 py-3 border text-center border-accent-400">
                 Image
               </th>
-              <th className="px-4 py-3 text-center border border-green-600">
+              <th className="px-4 py-3 text-center border border-accent-400">
                 Name and Email
               </th>
-              <th className="px-4 text-center py-3 border border-green-600">
+              <th className="px-4 text-center py-3 border border-accent-400">
                 Designation & Subject
               </th>
-              <th className="px-4 text-center text-sm py-3 border border-green-600">
+              <th className="px-4 text-center text-sm py-3 border border-accent-400">
                 Joining Date (YYYY-MM-DD)
               </th>
-              <th className="px-4 py-3 border border-green-600">Mobile</th>
-              <th className="px-4 py-3 border border-green-600 hidden print:table-cell">
+              <th className="px-4 py-3 border border-accent-400">Mobile</th>
+              <th className="px-4 py-3 border border-accent-400 hidden print:table-cell">
                 Signature
               </th>
-              <th className="px-4 py-3 border border-green-600 print:hidden">
+              <th className="px-4 py-3 border border-accent-400 print:hidden">
                 Details
               </th>
             </tr>
@@ -104,11 +104,11 @@ export default function TeachersPage() {
             {currentTeachers.map((teacher, index) => (
               <tr
                 key={teacher._id}
-                className={`${index % 2 === 0 ? "bg-white" : "bg-green-50"} text-gray-800`}
+                className={`${index % 2 === 0 ? "bg-neutral-50" : "bg-accent-100"} text-gray-800`}
               >
-                <td className="px-4 py-3 border border-green-600">
+                <td className="px-4 py-3 border border-accent-400">
                   {teacher.photoUrl ? (
-                    <div className="w-16 h-16 rounded-full overflow-hidden border border-green-600">
+                    <div className="w-16 h-16 rounded-full overflow-hidden border border-accent-400">
                       <Image
                         src={teacher.photoUrl}
                         alt={teacher.name}
@@ -118,31 +118,31 @@ export default function TeachersPage() {
                       />
                     </div>
                   ) : (
-                    <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-500 border border-green-600">
+                    <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-500 border border-accent-400">
                       No Photo
                     </div>
                   )}
                 </td>
-                <td className="px-4 py-3 border border-green-600">
+                <td className="px-4 py-3 border border-accent-400">
                   {teacher.name}, <strong>{teacher.email}</strong>
                 </td>
-                <td className="px-4 py-3 border border-green-600">
+                <td className="px-4 py-3 border border-accent-400">
                   {teacher.designation}, {teacher.subject}
                 </td>
 
-                <td className="px-4 py-3 text-sm border border-green-600">
+                <td className="px-4 py-3 text-sm border border-accent-400">
                   {teacher.joiningDate}
                 </td>
-                <td className="px-4 py-3 border border-green-600">
+                <td className="px-4 py-3 border border-accent-400">
                   {teacher.mobileNumber}
                 </td>
-                <td className="px-4 py-3 border border-green-600 hidden print:table-cell text-center">
+                <td className="px-4 py-3 border border-accent-400 hidden print:table-cell text-center">
                   ___________________
                 </td>
-                <td className="px-4 py-3 border border-green-600 print:hidden">
+                <td className="px-4 py-3 border border-accent-400 print:hidden">
                   <Link
                     href={`/profiles/${teacher._id}`}
-                    className="inline-block bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition"
+                    className="inline-block bg-accent-500 text-white px-3 py-1 rounded hover:bg-accent-600 transition"
                   >
                     View Details
                   </Link>
@@ -157,7 +157,7 @@ export default function TeachersPage() {
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="px-3 py-1 bg-green-600 text-white rounded disabled:opacity-50"
+          className="px-3 py-1 bg-accent-600 text-white rounded disabled:opacity-50 cursor-pointer  "
         >
           Prev
         </button>
@@ -165,10 +165,10 @@ export default function TeachersPage() {
           <button
             key={i + 1}
             onClick={() => handlePageChange(i + 1)}
-            className={`px-3 py-1 rounded ${
+            className={`px-3 py-1 rounded cursor-pointer ${
               currentPage === i + 1
-                ? "bg-green-800 text-white"
-                : "bg-green-200 text-green-900"
+                ? "bg-accent-500 text-white"
+                : "bg-accent-200 text-accent-600"
             }`}
           >
             {i + 1}
@@ -177,7 +177,7 @@ export default function TeachersPage() {
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="px-3 py-1 bg-green-600 text-white rounded disabled:opacity-50"
+          className="px-3 py-1 bg-accent-600 cursor-pointer text-white rounded disabled:opacity-50"
         >
           Next
         </button>

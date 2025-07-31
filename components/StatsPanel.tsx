@@ -33,7 +33,7 @@ export default function StatsPanel({ data }: { data: StatsPanelType }) {
           return (
             <div key={i} className="flex flex-col items-center justify-center">
               {/* Icon */}
-              <div className="w-24 h-24 flex items-center justify-center border-2 border-white rounded-full bg-white/10 backdrop-blur-md mb-2 shadow-md">
+              <div className="w-24 h-24 flex items-center justify-center border-2 border-white rounded-full bg-accent-600/40 backdrop-blur-md mb-2 shadow-md">
                 <Icon size={28} />
               </div>
               {/* Text */}

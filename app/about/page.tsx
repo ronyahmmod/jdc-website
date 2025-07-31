@@ -51,10 +51,10 @@ export default async function AboutPage() {
           <h2 className="text-xl font-semibold text-gray-700 mt-8">
             📜 History Timeline
           </h2>
-          <ul className="border-l-2 border-indigo-400 mt-4 space-y-4 pl-4">
+          <ul className="border-l-2 border-indigo-500 mt-4 space-y-4 pl-6">
             {history.map((item: History, i: number) => (
               <li key={i} className="relative">
-                <div className="absolute -left-2 top-1.5 w-3 h-3 bg-indigo-500 rounded-full" />
+                <div className="absolute -left-4 top-1.5 w-2 h-2 bg-indigo-500 rounded-full" />
                 <p className="text-sm font-semibold">{item.year}</p>
                 <p className="text-gray-600">{item.event}</p>
               </li>
