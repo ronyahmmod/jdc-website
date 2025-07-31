@@ -4,6 +4,7 @@ import { client } from "@/lib/sanity";
 import { groq } from "next-sanity";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface Teacher {
   _id: string;
@@ -75,21 +76,27 @@ export default function TeachersPage() {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full border border-green-600 rounded shadow overflow-hidden">
+        <table className="min-w-full border text-sm border-green-600 rounded shadow overflow-hidden">
           <thead className="bg-green-200 text-left text-green-900">
             <tr>
-              <th className="px-4 py-3 border border-green-600">Image</th>
-              <th className="px-4 py-3 border border-green-600">
-                Name and email
+              <th className="px-4 py-3 border text-center border-green-600">
+                Image
               </th>
-              <th className="px-4 py-3 border border-green-600">Designation</th>
-              <th className="px-4 py-3 border border-green-600">Subject</th>
-              <th className="px-4 py-3 border border-green-600">
+              <th className="px-4 py-3 text-center border border-green-600">
+                Name and Email
+              </th>
+              <th className="px-4 text-center py-3 border border-green-600">
+                Designation & Subject
+              </th>
+              <th className="px-4 text-center text-sm py-3 border border-green-600">
                 Joining Date (YYYY-MM-DD)
               </th>
               <th className="px-4 py-3 border border-green-600">Mobile</th>
               <th className="px-4 py-3 border border-green-600 hidden print:table-cell">
                 Signature
+              </th>
+              <th className="px-4 py-3 border border-green-600 print:hidden">
+                Details
               </th>
             </tr>
           </thead>
@@ -120,12 +127,10 @@ export default function TeachersPage() {
                   {teacher.name}, <strong>{teacher.email}</strong>
                 </td>
                 <td className="px-4 py-3 border border-green-600">
-                  {teacher.designation}
+                  {teacher.designation}, {teacher.subject}
                 </td>
-                <td className="px-4 py-3 border border-green-600">
-                  {teacher.subject}
-                </td>
-                <td className="px-4 py-3 border border-green-600">
+
+                <td className="px-4 py-3 text-sm border border-green-600">
                   {teacher.joiningDate}
                 </td>
                 <td className="px-4 py-3 border border-green-600">
@@ -134,13 +139,20 @@ export default function TeachersPage() {
                 <td className="px-4 py-3 border border-green-600 hidden print:table-cell text-center">
                   ___________________
                 </td>
+                <td className="px-4 py-3 border border-green-600 print:hidden">
+                  <Link
+                    href={`/profiles/${teacher._id}`}
+                    className="inline-block bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition"
+                  >
+                    View Details
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      {/* Pagination */}
       <div className="mt-6 flex justify-center items-center space-x-2 print:hidden">
         <button
           onClick={() => handlePageChange(currentPage - 1)}

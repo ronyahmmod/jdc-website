@@ -99,7 +99,8 @@ export default function Marquee() {
         .marquee-content {
           display: inline-block;
           white-space: nowrap;
-          animation: marquee 50s ease-in-out infinite;
+          animation: marquee 180s ease-in-out infinite;
+          animation-delay: 5s;
         }
         @keyframes marquee {
           0% {
