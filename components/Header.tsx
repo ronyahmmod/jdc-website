@@ -21,16 +21,31 @@ const navItems: NavItem[] = [
     label: "কলেজ পরিচিতি",
     href: "/about",
     subItems: [
+      { label: "কলেজের ইতিহাস", href: "/about" },
+      { label: "পরিচালনা পর্ষদের সাবেক সভাপতিগণ", href: "/formerchairman" },
       { label: "সাবেক অধ্যক্ষগণ", href: "/formerprincipal" },
+      { label: "সাবেক উপাধ্যক্ষগণ", href: "/formerviceprincipal" },
       { label: "এক নজরে কলেজ", href: "/eknojore" },
     ],
   },
   { label: "পরিচালনা পর্ষদ", href: "/gb" },
-  { label: "শিক্ষকবৃন্দ", href: "/teachers" },
-  { label: "কর্মচারীবৃন্দ", href: "/staff" },
+  {
+    label: "শিক্ষকবৃন্দ",
+    href: "/teachers",
+    subItems: [
+      { label: "কর্মরত শিক্ষকবৃন্দ", href: "/teachers" },
+      { label: "সাবেক শিক্ষকবৃন্দ", href: "/formerteachers" },
+    ],
+  },
+  {
+    label: "কর্মচারীবৃন্দ",
+    href: "/staff",
+    subItems: [
+      { label: "কর্মরত কর্মচারীবৃন্দ", href: "/staff" },
+      { label: "সাবেক কর্মচারীবৃন্দ", href: "/formerstaff" },
+    ],
+  },
   { label: "ক্লাস রুটিন", href: "/routine" },
-  { label: "শিক্ষার্থী তথ্য", href: "/studentinfo" },
-  { label: "বিজ্ঞপ্তি", href: "/notices" },
   {
     label: "সেবা",
     href: "/service",
@@ -149,7 +164,7 @@ export default function Header() {
                     onMouseEnter={() => handleMouseEnter(key)}
                     onMouseLeave={() => handleMouseLeave(key)}
                   >
-                    <button className="text-gray-700 hover:text-gray-600 font-medium flex items-center">
+                    <button className="text-gray-700 hover:text-gray-600 font-sm flex items-center">
                       {item.label}
                       <svg
                         className="w-4 h-4 ml-1"

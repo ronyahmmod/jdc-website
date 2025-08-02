@@ -30,7 +30,7 @@ export default function ChairmanMessage() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="max-w-5xl mx-auto bg-neutral-50 shadow-lg rounded-xl p-6 my-10 flex flex-col md:flex-row items-center gap-6"
+      className="max-w-5xl mx-auto bg-neutral-50 shadow-accent-100 shadow-lg rounded-xl p-6 my-6 flex flex-col md:flex-row items-center gap-6"
     >
       {/* Image Section */}
       <motion.div

@@ -105,7 +105,7 @@ export default function HeroSlider() {
               >
                 <div className="text-right text-white max-w-[80%]">
                   <motion.h2
-                    className="text-2xl md:text-4xl font-bold mb-2"
+                    className="text-sm md:text-2xl md:font-sm mb-2"
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
@@ -114,7 +114,7 @@ export default function HeroSlider() {
                   </motion.h2>
                   {slide.subtitle && (
                     <motion.p
-                      className="text-base md:text-lg mb-4"
+                      className="text-sm md:text-lg mb-4"
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.5, duration: 0.5 }}
@@ -126,7 +126,7 @@ export default function HeroSlider() {
                     <motion.a
                       href={slide.buttonLink}
                       target="_blank"
-                      className="inline-block bg-white text-black px-6 py-3 rounded-md font-medium hover:bg-gray-200 transition-transform hover:scale-105"
+                      className="inline-block bg-accent-500 text-neutral-50 px-3 py-2 md:px-4 md:py-3 rounded-md font-sm hover:bg-accent-600 transition-transform hover:scale-105"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.6, duration: 0.5 }}
@@ -145,7 +145,7 @@ export default function HeroSlider() {
       <div className="absolute inset-y-0 left-0 flex items-center px-4">
         <motion.button
           onClick={goPrev}
-          className="bg-black/50 p-3 rounded-full text-white hover:bg-black/80 transition-all duration-300"
+          className="bg-accent-600/50 p-3 rounded-full text-white hover:bg-accent-600/80 transition-all duration-300"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -155,7 +155,7 @@ export default function HeroSlider() {
       <div className="absolute inset-y-0 right-0 flex items-center px-4">
         <motion.button
           onClick={goNext}
-          className="bg-black/50 p-3 rounded-full text-white hover:bg-black/80 transition-all duration-300"
+          className="bg-accent-600/50 p-3 rounded-full text-white hover:bg-accent-600/80 transition-all duration-300"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
