@@ -41,11 +41,16 @@ export default function MarqueeComponent() {
 
   return (
     <div className="flex items-center bg-blue-50 border-b border-blue-200 text-sm md:text-base text-blue-900 py-3 px-4 overflow-hidden animate-fade-in">
-      <div className="min-w-[150px] font-semibold text-primary-600 flex items-center gap-2 text-sm md:text-base">
+      <div className="min-w-[150px] hidden md:flex font-semibold text-primary-600 items-center gap-2 text-sm md:text-base">
         <span role="img" aria-label="Important">
           🔔
         </span>{" "}
         Important News:
+      </div>
+      <div className="min-w-[20px] md:hidden flex font-semibold text-primary-600 items-center gap-2 text-sm md:text-base">
+        <span role="img" aria-label="Important">
+          🔔
+        </span>{" "}
       </div>
       <div className="flex-1">
         <Marquee pauseOnHover gradient={false} speed={70}>

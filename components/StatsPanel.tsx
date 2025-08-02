@@ -18,13 +18,13 @@ export default function StatsPanel({ data }: { data: StatsPanelType }) {
 
   return (
     <section
-      className="relative py-12 px-4 bg-center bg-cover min-h-[200px]"
+      className="relative py-12 px-4 bg-center bg-cover min-h-[200px] rounded-2xl overflow-hidden"
       style={{
         backgroundImage: bgUrl ? `url(${bgUrl})` : "none",
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60 z-0" />
+      <div className="absolute inset-0 bg-black/70 z-0" />
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-white text-center justify-center">

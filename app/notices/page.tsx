@@ -125,7 +125,7 @@ export default function NoticeMainPage() {
                             rel="noopener noreferrer"
                             className="text-indigo-600 hover:underline"
                           >
-                            ⬇ {`File-${idx}` || ""}
+                            ⬇ {`File-${idx + 1}` || ""}
                           </a>
                         </li>
                       ))}

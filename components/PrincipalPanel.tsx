@@ -34,7 +34,7 @@ export default function PrincipalPanel() {
           <div
             key={person._id}
             onClick={() => router.push(`/profiles/${person._id}`)}
-            className="cursor-pointer bg-white shadow-md rounded-xl p-4 hover:shadow-xl transition duration-300 flex flex-col items-center text-center"
+            className="cursor-pointer bg-white shadow-accent-100 shadow-md rounded-xl p-4 hover:shadow-xl transition duration-300 flex flex-col items-center text-center"
           >
             <div className="w-[200px] h-[200px] mx-auto overflow-hidden rounded-xl">
               <Image
