@@ -21,7 +21,17 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             <li>
               <a
-                href="https://moedu.gov.bd"
+                href="https://cao.gov.bd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent-400 flex items-center gap-2"
+              >
+                Chief Advisor Office <FaExternalLinkAlt size={12} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://moedu.portal.gov.bd"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-accent-400 flex items-center gap-2"
@@ -29,16 +39,7 @@ export default function Footer() {
                 Ministry of Education <FaExternalLinkAlt size={12} />
               </a>
             </li>
-            <li>
-              <a
-                href="https://pmo.gov.bd"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-accent-400 flex items-center gap-2"
-              >
-                Prime Minister’s Office <FaExternalLinkAlt size={12} />
-              </a>
-            </li>
+
             <li>
               <a
                 href="https://ugc.gov.bd"
@@ -47,6 +48,66 @@ export default function Footer() {
                 className="hover:text-accent-400 flex items-center gap-2"
               >
                 UGC Bangladesh <FaExternalLinkAlt size={12} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://jessoreboard.gov.bd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent-400 flex items-center gap-2"
+              >
+                Jessore Board <FaExternalLinkAlt size={12} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://bteb.gov.bd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent-400 flex items-center gap-2"
+              >
+                Technical Education Board <FaExternalLinkAlt size={12} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://nu.ac.bd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent-400 flex items-center gap-2"
+              >
+                National University <FaExternalLinkAlt size={12} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://bou.ac.bd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent-400 flex items-center gap-2"
+              >
+                Bangladesh Open University <FaExternalLinkAlt size={12} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://dshe.gov.bd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent-400 flex items-center gap-2"
+              >
+                DSHE <FaExternalLinkAlt size={12} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://jibannagar.chuadanga.gov.bd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent-400 flex items-center gap-2"
+              >
+                Jibannagar Upazila <FaExternalLinkAlt size={12} />
               </a>
             </li>
           </ul>
