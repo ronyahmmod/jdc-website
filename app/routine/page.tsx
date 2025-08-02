@@ -39,21 +39,23 @@ export default async function RoutineListPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-green-800 mb-6 text-center">
+      <h1 className="text-2xl font-bold text-accent-600 mb-6 text-center">
         🗓️ All Published Class Routines
       </h1>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full border border-green-600 rounded shadow">
-          <thead className="bg-green-100 text-left text-green-900">
+        <table className="min-w-full border border-accent-400 rounded shadow">
+          <thead className="bg-accent-400 text-left text-accent-50">
             <tr>
-              <th className="px-4 py-3 border border-green-600">Class</th>
-              <th className="px-4 py-3 border border-green-600">
+              <th className="px-4 py-3 border border-accent-400 text-center">
+                Class
+              </th>
+              <th className="px-4 py-3 border border-accent-400">
                 Published Date
               </th>
-              <th className="px-4 py-3 border border-green-600">Type</th>
-              <th className="px-4 py-3 border border-green-600">Preview</th>
-              <th className="px-4 py-3 border border-green-600">Download</th>
+              <th className="px-4 py-3 border border-accent-400">Type</th>
+              <th className="px-4 py-3 border border-accent-400">Preview</th>
+              <th className="px-4 py-3 border border-accent-400">Download</th>
             </tr>
           </thead>
           <tbody>
@@ -62,32 +64,32 @@ export default async function RoutineListPage() {
               return (
                 <tr
                   key={routine._id}
-                  className={idx % 2 === 0 ? "bg-white" : "bg-green-50"}
+                  className={idx % 2 === 0 ? "bg-neutral-50" : "bg-accent-100"}
                 >
-                  <td className="px-4 py-3 border border-green-600">
+                  <td className="px-4 py-3 border border-accent-400">
                     {routine.className}
                   </td>
-                  <td className="px-4 py-3 border border-green-600">
+                  <td className="px-4 py-3 border border-accent-400">
                     {format(new Date(routine.publishedDate), "dd MMM yyyy")}
                   </td>
-                  <td className="px-4 py-3 border border-green-600">
+                  <td className="px-4 py-3 border border-accent-400">
                     {isPDF ? "PDF" : "Image"}
                   </td>
-                  <td className="px-4 py-3 border border-green-600">
+                  <td className="px-4 py-3 border border-accent-400">
                     <a
                       href={routine.file.asset.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 underline hover:text-blue-800"
+                      className="text-accent-500 underline hover:text-accent-600"
                     >
                       View
                     </a>
                   </td>
-                  <td className="px-4 py-3 border border-green-600">
+                  <td className="px-4 py-3 border border-accent-400">
                     <a
                       href={routine.file.asset.url}
                       download
-                      className="text-green-600 underline hover:text-green-800"
+                      className="text-accent-500 underline hover:text-accent-600"
                     >
                       Download
                     </a>

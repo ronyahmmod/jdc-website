@@ -62,7 +62,7 @@ export default function NoticeMainPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold mb-6 text-center text-indigo-700">
+      <h1 className="text-3xl font-bold mb-6 text-center text-accent-600">
         📢 All Notices
       </h1>
 
@@ -74,7 +74,7 @@ export default function NoticeMainPage() {
             onClick={() => setSelectedCategory(cat.slug)}
             className={`px-4 py-2 rounded-full border ${
               selectedCategory === cat.slug
-                ? "bg-indigo-600 text-white"
+                ? "bg-accent-600 text-white"
                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
             } transition`}
           >
@@ -98,12 +98,12 @@ export default function NoticeMainPage() {
       {/* Table */}
       <div className="bg-white shadow rounded-lg overflow-x-auto">
         <table className="w-full table-auto text-sm text-left">
-          <thead className="bg-gray-100 text-gray-700">
+          <thead className="bg-primary-500 text-neutral-50">
             <tr>
-              <th className="py-2 px-4">Title</th>
-              <th className="py-2 px-4">Published</th>
-              <th className="py-2 px-4">Files</th>
-              <th className="py-2 px-4">View</th>
+              <th className="py-2 px-4 text-lg">Title</th>
+              <th className="py-2 px-4 text-lg">Published</th>
+              <th className="py-2 px-4 text-lg">Files</th>
+              <th className="py-2 px-4 text-lg">View</th>
             </tr>
           </thead>
           <tbody>
@@ -116,7 +116,7 @@ export default function NoticeMainPage() {
                 <td className="px-4 py-2">
                   {notice.attachments?.length > 0 ? (
                     <ul>
-                      {notice.attachments.map((file) => (
+                      {notice.attachments.map((file, idx) => (
                         <li key={file._key}>
                           <a
                             href={file.url}
@@ -125,7 +125,7 @@ export default function NoticeMainPage() {
                             rel="noopener noreferrer"
                             className="text-indigo-600 hover:underline"
                           >
-                            ⬇ {file.originalFilename || ""}
+                            ⬇ {`File-${idx}` || ""}
                           </a>
                         </li>
                       ))}
@@ -134,7 +134,7 @@ export default function NoticeMainPage() {
                     "—"
                   )}
                 </td>
-                <td className="px-4 py-2">
+                <td className="px-4 py-2 col-span-3">
                   <Link
                     href={`/notices/${notice.slug?.current || "notice"}`}
                     className="text-indigo-600 hover:underline"

@@ -56,11 +56,14 @@ export default function GoverningBodyPanel() {
       </p>
     );
 
-  const renderRow = (person: GBMember, position: string) => (
-    <tr className="border-b" key={position}>
-      <td className="p-2 text-sm text-center border">
+  const renderRow = (person: GBMember, position: number) => (
+    <tr
+      className={`border-b ${position % 2 === 0 ? "bg-neutral-50" : "bg-accent-100"}`}
+      key={position}
+    >
+      <td className="p-2 text-sm text-center border border-accent-400">
         {person.photo?.asset?.url ? (
-          <div className="w-16 h-16 rounded-full overflow-hidden border border-green-600">
+          <div className="w-16 h-16 rounded-full overflow-hidden border border-accent-400">
             <Image
               src={person.photo.asset.url}
               alt={person.name}
@@ -70,28 +73,36 @@ export default function GoverningBodyPanel() {
             />
           </div>
         ) : (
-          <div className="w-[60px] h-[60px] bg-gray-200 rounded-full mx-auto flex items-center justify-center text-gray-500">
+          <div className="w-[60px] h-[60px] border border-neutral-900 bg-gray-200 rounded-full mx-auto flex items-center justify-center text-gray-500">
             N/A
           </div>
         )}
       </td>
-      <td className="p-2 text-sm border text-center uppercase">
+      <td className="p-2 text-sm border border-accent-400 text-center uppercase">
         <strong>{person.name}</strong>
       </td>
-      <td className="p-2 text-sm border uppercase">{person.role}</td>
-      <td className="p-2 text-sm border uppercase">{person.occupation}</td>
-      <td className="p-2 text-sm border uppercase">{person.mobile}</td>
-      <td className="p-2 text-sm border uppercase">{person.address}</td>
+      <td className="p-2 text-sm border border-accent-400 uppercase">
+        {person.role}
+      </td>
+      <td className="p-2 text-sm border border-accent-400 uppercase">
+        {person.occupation}
+      </td>
+      <td className="p-2 text-sm border border-accent-400 uppercase">
+        {person.mobile}
+      </td>
+      <td className="p-2 text-sm border border-accent-400 uppercase">
+        {person.address}
+      </td>
     </tr>
   );
 
   return (
     <section className="py-12 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-2xl font-bold text-center text-green-800 mb-6">
+        <h2 className="text-2xl font-bold text-center text-accent-600 mb-6">
           🏛️ Governing Body
         </h2>
-        <p className="text-center text-red-500">
+        <p className="text-center bg-primary-600 text-neutral-50 px-3 py-3 rounded-2xl">
           (Approved on: {new Date(committee.approvalDate).toDateString()}) Valid
           Till: ({new Date(committee.termStart).toDateString()} --{" "}
           {new Date(committee.termEnd).toDateString()})
@@ -108,24 +119,22 @@ export default function GoverningBodyPanel() {
 
         <div
           id="gb-table"
-          className="overflow-x-auto border rounded shadow bg-white p-4"
+          className="overflow-x-auto rounded shadow bg-white p-4"
           style={{ color: "black", backgroundColor: "white" }}
         >
           <table className="min-w-full table-auto border-collapse">
-            <thead className="bg-green-100 text-gray-800 text-sm">
+            <thead className="bg-accent-400 text-neutral-50 text-sm">
               <tr>
-                <th className="p-2 border py-4">Photo</th>
-                <th className="p-2 border">Name</th>
-                <th className="p-2 border">Role</th>
-                <th className="p-2 border">Occupation</th>
-                <th className="p-2 border">Phone</th>
-                <th className="p-2 border">Address</th>
+                <th className="p-2 border border-accent-400 py-4">Photo</th>
+                <th className="p-2 border border-accent-400">Name</th>
+                <th className="p-2 border border-accent-400">Role</th>
+                <th className="p-2 border border-accent-400 ">Occupation</th>
+                <th className="p-2 border border-accent-400">Phone</th>
+                <th className="p-2 border border-accent-400">Address</th>
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              {committee.members?.map((member, idx) =>
-                renderRow(member, `Member ${idx + 1}`)
-              )}
+              {committee.members?.map((member, idx) => renderRow(member, idx))}
             </tbody>
           </table>
         </div>

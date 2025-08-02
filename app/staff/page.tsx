@@ -4,6 +4,7 @@ import { client } from "@/lib/sanity";
 import { groq } from "next-sanity";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface Staff {
   _id: string;
@@ -52,32 +53,37 @@ export default function StaffsPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6 print:hidden">
-        <h1 className="text-2xl font-bold text-green-800">
+        <h1 className="text-2xl font-bold text-accent-600">
           👷 Staff Information
         </h1>
         <button
           onClick={handlePrint}
-          className="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition"
+          className="px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 transition cursor-pointer"
         >
           🖨 Print
         </button>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full border border-green-600 rounded shadow">
-          <thead className="bg-green-200 text-left text-green-900">
+        <table className="min-w-full border border-primary-600 rounded shadow">
+          <thead className="bg-accent-400 text-left text-accent-50">
             <tr>
-              <th className="px-4 py-3 border border-green-600">Image</th>
-              <th className="px-4 py-3 border border-green-600">
+              <th className="px-4 py-3 border border-accent-400">Image</th>
+              <th className="px-4 py-3 border border-accent-400">
                 Name & Email
               </th>
-              <th className="px-4 py-3 border border-green-600">Designation</th>
-              <th className="px-4 py-3 border border-green-600">
+              <th className="px-4 py-3 border border-accent-400">
+                Designation
+              </th>
+              <th className="px-4 py-3 border border-accent-400">
                 Joining Date
               </th>
-              <th className="px-4 py-3 border border-green-600">Mobile</th>
-              <th className="px-4 py-3 border border-green-600 hidden print:table-cell">
+              <th className="px-4 py-3 border border-accent-400">Mobile</th>
+              <th className="px-4 py-3 border border-accent-400 hidden print:table-cell">
                 Signature
+              </th>
+              <th className="px-4 py-3 border border-accent-400 print:hidden">
+                Details
               </th>
             </tr>
           </thead>
@@ -85,11 +91,11 @@ export default function StaffsPage() {
             {currentStaffs.map((staff, index) => (
               <tr
                 key={staff._id}
-                className={`${index % 2 === 0 ? "bg-white" : "bg-green-50"} text-gray-800`}
+                className={`${index % 2 === 0 ? "bg-neutral-50" : "bg-accent-100"} text-gray-800`}
               >
-                <td className="px-4 py-3 border border-green-600">
+                <td className="px-4 py-3 border border-accent-400">
                   {staff.photoUrl ? (
-                    <div className="w-16 h-16 rounded-full overflow-hidden border border-green-600">
+                    <div className="w-16 h-16 rounded-full overflow-hidden border border-accent-400">
                       <Image
                         src={staff.photoUrl}
                         alt={staff.name}
@@ -99,26 +105,34 @@ export default function StaffsPage() {
                       />
                     </div>
                   ) : (
-                    <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-500 border border-green-600">
+                    <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-500 border border-accent-400">
                       No Photo
                     </div>
                   )}
                 </td>
-                <td className="px-4 py-3 border border-green-600">
+                <td className="px-4 py-3 border border-accent-400">
                   {staff.name} <br />
                   <span className="text-sm text-gray-600">{staff.email}</span>
                 </td>
-                <td className="px-4 py-3 border border-green-600">
+                <td className="px-4 py-3 border border-accent-400">
                   {staff.designation}
                 </td>
-                <td className="px-4 py-3 border border-green-600">
+                <td className="px-4 py-3 border border-accent-400">
                   {staff.joiningDate}
                 </td>
-                <td className="px-4 py-3 border border-green-600">
+                <td className="px-4 py-3 border border-accent-400">
                   {staff.mobileNumber}
                 </td>
-                <td className="px-4 py-3 border border-green-600 hidden print:table-cell text-center">
+                <td className="px-4 py-3 border border-accent-400 hidden print:table-cell text-center">
                   ___________________
+                </td>
+                <td className="px-4 py-3 border border-accent-400 print:hidden">
+                  <Link
+                    href={`/profiles/${staff._id}`}
+                    className="inline-block bg-accent-500 text-white px-3 py-1 rounded hover:bg-accent-600 transition"
+                  >
+                    View Details
+                  </Link>
                 </td>
               </tr>
             ))}
@@ -131,7 +145,7 @@ export default function StaffsPage() {
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
-          className="px-3 py-1 bg-green-600 text-white rounded disabled:opacity-50"
+          className="px-3 py-1 cursor-pointer bg-accent-600 text-white rounded disabled:opacity-50"
         >
           Prev
         </button>
@@ -141,8 +155,8 @@ export default function StaffsPage() {
             onClick={() => setCurrentPage(i + 1)}
             className={`px-3 py-1 rounded ${
               currentPage === i + 1
-                ? "bg-green-800 text-white"
-                : "bg-green-200 text-green-900"
+                ? "bg-accent-500 text-white"
+                : "bg-accent-200 text-accent-600"
             }`}
           >
             {i + 1}
@@ -151,7 +165,7 @@ export default function StaffsPage() {
         <button
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="px-3 py-1 bg-green-600 text-white rounded disabled:opacity-50"
+          className="px-3 py-1 cursor-pointer bg-accent-600 text-white rounded disabled:opacity-50"
         >
           Next
         </button>
