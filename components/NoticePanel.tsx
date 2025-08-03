@@ -44,9 +44,7 @@ export default function NoticePanel() {
                   className="flex items-center p-3 text-primary-700 hover:text-blue-600 transition-colors duration-200"
                 >
                   <span className="mr-2">•</span>
-                  <span className="text-sm font-medium truncate">
-                    {notice.title}
-                  </span>
+                  <span className="text-sm font-medium">{notice.title}</span>
                 </Link>
               </li>
             ))

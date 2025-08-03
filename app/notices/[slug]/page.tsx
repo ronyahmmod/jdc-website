@@ -71,12 +71,12 @@ export async function generateMetadata({ params }: PageProps) {
     "https://jibannagardegreecollege.com/default-share-image.jpg"; // Fallback image
 
   // Log metadata for debugging
-  console.log({
-    title: notice.title,
-    description: notice.summary?.slice(0, 150),
-    pageUrl,
-    shareImage,
-  });
+  // console.log({
+  //   title: notice.title,
+  //   description: notice.summary?.slice(0, 150),
+  //   pageUrl,
+  //   shareImage,
+  // });
 
   return {
     title: `${notice.title} | Notice`,
