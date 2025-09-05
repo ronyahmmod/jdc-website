@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  other: {
+    monetag: "c391c1b391e4ab506a4227e5a0316496",
+  },
 };
 
 export default async function RootLayout({
