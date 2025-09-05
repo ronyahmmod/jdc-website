@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+
 import "./globals.css";
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
   },
   other: {
-    monetag: "c391c1b391e4ab506a4227e5a0316496",
+    // monetag: "c391c1b391e4ab506a4227e5a0316496",
   },
 };
 
