@@ -13,46 +13,72 @@ type NavItem = {
   subdomain?: string;
   logo?: string; // Optional logo URL for subItems
   subItems?: NavItem[];
+  key: string; // Unique key for each menu item
 };
 
 const navItems: NavItem[] = [
-  { label: "হোম", href: "/" },
+  { label: "হোম", href: "/", key: "home" },
   {
     label: "কলেজ পরিচিতি",
     href: "/about",
+    key: "about",
     subItems: [
-      { label: "কলেজের ইতিহাস", href: "/about" },
-      { label: "পরিচালনা পর্ষদের সাবেক সভাপতিগণ", href: "/formerchairman" },
-      { label: "সাবেক অধ্যক্ষগণ", href: "/formerprincipal" },
-      { label: "সাবেক উপাধ্যক্ষগণ", href: "/formerviceprincipal" },
-      { label: "এক নজরে কলেজ", href: "/eknojore" },
+      { label: "কলেজের ইতিহাস", href: "/about", key: "history" },
+      {
+        label: "পরিচালনা পর্ষদের সাবেক সভাপতিগণ",
+        href: "/formerchairman",
+        key: "formerchairman",
+      },
+      {
+        label: "সাবেক অধ্যক্ষগণ",
+        href: "/formerprincipal",
+        key: "formerprincipal",
+      },
+      {
+        label: "সাবেক উপাধ্যক্ষগণ",
+        href: "/formerviceprincipal",
+        key: "formerviceprincipal",
+      },
+      { label: "এক নজরে কলেজ", href: "/eknojore", key: "eknojore" },
     ],
   },
-  { label: "পরিচালনা পর্ষদ", href: "/gb" },
+  { label: "পরিচালনা পর্ষদ", href: "/gb", key: "gb" },
   {
     label: "শিক্ষকবৃন্দ",
     href: "/teachers",
+    key: "teachers",
     subItems: [
-      { label: "কর্মরত শিক্ষকবৃন্দ", href: "/teachers" },
-      { label: "সাবেক শিক্ষকবৃন্দ", href: "/formerteachers" },
+      { label: "কর্মরত শিক্ষকবৃন্দ", href: "/teachers", key: "teachers" },
+      {
+        label: "সাবেক শিক্ষকবৃন্দ",
+        href: "/formerteachers",
+        key: "formerteachers",
+      },
     ],
   },
   {
     label: "কর্মচারীবৃন্দ",
     href: "/staff",
+    key: "staff",
     subItems: [
-      { label: "কর্মরত কর্মচারীবৃন্দ", href: "/staff" },
-      { label: "সাবেক কর্মচারীবৃন্দ", href: "/formerstaff" },
+      { label: "কর্মরত কর্মচারীবৃন্দ", href: "/staff", key: "staff" },
+      {
+        label: "সাবেক কর্মচারীবৃন্দ",
+        href: "/formerstaff",
+        key: "formerstaff",
+      },
     ],
   },
-  { label: "ক্লাস রুটিন", href: "/routine" },
+  { label: "ক্লাস রুটিন", href: "/routine", key: "routine" },
   {
     label: "সেবা",
     href: "/service",
+    key: "service",
     subItems: [
       {
         label: "Student Services",
         href: "/",
+        key: "student-services",
         subdomain: "app1",
         target: "_blank",
         // logo: "/path/to/student-services-logo.png", // Example logo
@@ -60,6 +86,7 @@ const navItems: NavItem[] = [
       {
         label: "Payment",
         href: "/",
+        key: "payment",
         subdomain: "payment",
         target: "_blank",
         // logo: "/path/to/payment-logo.png", // Example logo
@@ -67,6 +94,7 @@ const navItems: NavItem[] = [
       {
         label: "Result",
         href: "/",
+        key: "result",
         subdomain: "result",
         target: "_blank",
         // logo: "/path/to/result-logo.png",
@@ -74,14 +102,19 @@ const navItems: NavItem[] = [
       {
         label: "প্রশিক্ষণ প্রোগ্রাম",
         href: "/",
+        key: "training",
         subdomain: "training",
         target: "_blank",
       },
-      { label: "লাইব্রেরি সেবা", href: "/service/library" },
-      { label: "ক্যারিয়ার কাউন্সেলিং", href: "/service/counseling" },
+      { label: "লাইব্রেরি সেবা", href: "/service/library", key: "library" },
+      {
+        label: "ক্যারিয়ার কাউন্সেলিং",
+        href: "/service/counseling",
+        key: "counseling",
+      },
     ],
   },
-  { label: "যোগাযোগ", href: "/contact" },
+  { label: "যোগাযোগ", href: "/contact", key: "contact" },
 ];
 
 export default function Header() {
@@ -162,7 +195,7 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           {navItems.map((item) => {
-            const key = item.href; // Unique key for each menu item
+            const key = item.key; // Unique key for each menu item
             return (
               <div key={key} className="relative group">
                 {item.subItems ? (
