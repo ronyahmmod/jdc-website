@@ -17,7 +17,7 @@
     "jspdf": "^3.0.1",
     "lucide-react": "^0.526.0",
     "next": "^16.2.12",
-    "next-sanity": "^10.0.0",
+    "next-sanity": "^13.2.3",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-fast-marquee": "^1.6.5",
