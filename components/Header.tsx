@@ -58,6 +58,13 @@ const navItems: NavItem[] = [
         // logo: "/path/to/student-services-logo.png", // Example logo
       },
       {
+        label: "Payment",
+        href: "/",
+        subdomain: "payment",
+        target: "_blank",
+        // logo: "/path/to/payment-logo.png", // Example logo
+      },
+      {
         label: "Result",
         href: "/",
         subdomain: "result",
@@ -81,7 +88,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [collegeInfo, setCollegeInfo] = useState<InstitutionInfo | null>(null);
   const [dropdownStates, setDropdownStates] = useState<Map<string, boolean>>(
-    new Map()
+    new Map(),
   );
   const [dropdownTimeouts, setDropdownTimeouts] = useState<
     Map<string, NodeJS.Timeout | null>

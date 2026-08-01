@@ -26,6 +26,12 @@ const services: ServiceItem[] = [
     icon: BookOpen,
     external: true,
   },
+  {
+    title: "Payment",
+    href: "https://payment.jibannagardegreecollege.com",
+    icon: BadgeDollarSign,
+    external: true,
+  },
   { title: "Internal Result", href: "/internal-result", icon: FileText },
   { title: "Public Result", href: "/public-result", icon: FileText },
   { title: "Students", href: "/students", icon: Users },
@@ -74,7 +80,7 @@ export default function ServicePanel() {
                 {title}
               </span>
             </Link>
-          )
+          ),
         )}
       </div>
     </div>
